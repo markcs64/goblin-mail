@@ -610,7 +610,7 @@ $(function(){
 			width:"100%",
 			mailTo : "sxnow@126.com;alibaba_test@yahoo.com;alibaba_test@hotmail.com;alibabatest@gmail.com"
 		}
-		//$("#d6wEditor").toBeEditor(editorConfig);
+		$("#d6wEditor").toBeEditor(editorConfig);
 		
 		
 		//初始化模板箱

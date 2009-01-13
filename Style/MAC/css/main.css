@@ -27,7 +27,7 @@ a:hover{color:#8F4116;}
 
 /** 全页覆盖背景层 **/
 /** ie下更好看的背景效果 缺点:耗资源 .alphaBG{position:fixed;_position:absolute;left:0px;top:0px;height:100%;width:100%;background:#3D3D3D;text-align:center;filter:progid:DXImageTransform.Microsoft.Alpha(style=1,startY=0,finishY=100,startX=0,finishX=100,opacity=25,finishOpacity=80);-moz-opacity:0.6;opacity:0.6;z-index:1212;}*/
-.shadow{display:none;position:fixed;_position:absolute;left:0px;top:0px;height:100%;width:100%;background:#3D3D3D;text-align:center;filter:alpha(opacity=70);-moz-opacity:0.7;opacity:0.7;z-index:37;}
+.shadow{display:none;position:fixed;_position:absolute;left:0px;top:0px;height:100%;width:100%;background:url(../images/main/bg2.gif) #3D3D3D;text-align:center;filter:alpha(opacity=80);-moz-opacity:0.8;opacity:0.8;z-index:37;}
 /** notice **/
 
 /** fileBrowser **/

@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>AliUED EDM Goblin</title>
+	<style id="css" type="text/css" media="all" skinPath="Style/MAC">
+		@import url("style/MAC/css/main.css");
+	</style>
+	<link rel="shortcut icon" href="style/MAC/favicon.ico" /> 
+</head>
+
+<body>
+	
+	<div id="historyAPP"></div>
+	<div id="shadow" class="shadow"></div>
+	
+	<!-- {{{{ 模板箱 -->
+	<div id="templatesBox" class="FBBox">
+		<div id="templatesList" class="FBList"></div>
+		<div id="templateShowRoom" class="FBShowRoom">
+			<iframe class="FBIframe"></iframe>
+		</div>
+		<a id="templatesBoxCloseBtn" class="Btn FBCloseBtn" title="关闭我的模板箱"></a>
+		<a id="templatesBoxReloadBtn" class="Btn FBReloadBtn" title="刷新模板文件夹"></a>
+	</div>
+	<!-- }}}} 模板箱 -->
+	
+	<!-- {{{{ 草稿箱 -->
+	<div id="draftsBox" class="FBBox">
+		<div id="draftsList" class="FBList"></div>
+		<div id="draftShowRoom" class="FBShowRoom">
+			<iframe class="FBIframe"></iframe>
+		</div>
+		<a id="draftsBoxCloseBtn" class="FBCloseBtn Btn" title="关闭我的草稿箱"></a>
+		<a id="draftsBoxReloadBtn" class="FBReloadBtn Btn" title="刷新草稿文件夹"></a>
+	</div>
+	<!-- }}}} 草稿箱 -->
+	
+	<div id="mailBox" class="mailBox">
+		...
+	</div>
+	
+	
+	<ul id="SCV" class="SCV">
+			<li id="scvHandle" class="scvHandle"></li>
+			<li class="scvBox" contentEditable=true >^_^</li>
+			<li class="scvBox">-_-</li>
+			<li id="itemLi"  class="scvBox" contentEditable="true"  ondblclick="alert('不可编辑');" ondragstart="event.dataTransfer.effectAllowed='copy';">
+				<div class="scvBoxContent">
+					<div style="display:block;overflow:hidden;width:400px;border:1px #333 solid;"  >
+						<div style="border:1px #333 solid;margin:5px;width:20px;height:20px;float:left;">
+							A
+						</div>
+						<div style="border:1px #333 solid;margin:5px;width:20px;height:20px;float:right;">
+							B
+						</div>
+						<div style="clear:both"></div>
+						<p style="border:1px #333 solid;margin:5px;">C</p>
+						<div class="snow">AAAAAAAAAA</div>
+					</div>
+				</div>
+				<span id="test">插入到编辑器</span>
+			</li>
+	</ul>
+	<!--
+	<a ondragstart="event.dataTransfer.effectAllowed='copy'; event.dataTransfer.dropEffect='move';
+	event.dataTransfer.setData('TEXT', '<div>fdfdsf</div>');" 
+	
+	ondragover="event.dataTransfer.dropEffect='move'; event.returnValue=false; event.cancelBubble=true;"
+	
+	onmouseover="status=this.innerText; return true;"
+	style="BORDER-RIGHT: red 1px solid; BORDER-TOP: red 1px solid; BORDER-LEFT: red 1px solid; WIDTH: 240px; CURSOR: default; COLOR: red; BORDER-BOTTOM: red 1px solid; TEXT-ALIGN: center; TEXT-DECORATION: none"  onclick="return false;" href="#">
+jjjjjjjjjjj
+	</a>
+		
+
+		<SPAN ondrop="this.innerText = event.dataTransfer.getData('TEXT');this.style.color = 'red';"
+			
+			 ondragover="event.dataTransfer.dropEffect='copy';event.returnValue=false; event.cancelBubble=true;"
+			 
+			 style="BORDER-RIGHT: blue 1px solid;
+			  BORDER-TOP: blue 1px solid; BORDER-LEFT: blue 1px solid; WIDTH: 240px; CURSOR: default; COLOR: blue; BORDER-BOTTOM: blue 1px solid; TEXT-ALIGN: center">
+			<FONT face=Tahoma>Drop Destination</FONT>
+			</SPAN>
+		<BR>
+		-->
+
+	
+	<!-- {{{{ 编辑器 -->
+	<textarea id="d6wEditor" name="edmEditor" style="display:none;">
+		<style>
+			body{background:url('../../../Style/WallPapers/defaultBg4.gif');}	
+			.snow{color:#B978BE;}
+		</style>
+		<div style='font:10px verdana;color:#E10000;' id='noDesign'>AliUED:&gt; Goblin_v1.1α -d6w ↙ you can't design me?</div>
+		<br />
+		<span style='font:10px verdana;color:#E10000;'>AliUED:&gt; Goblin_v1.1α -d6w ↙ Yes you can design me!</span>
+	</textarea>
+	<!-- }}}} 编辑器 -->
+	
+	<!-- {{{{ 按钮栏 -->
+	<div id="toolBar">
+		<a id="templatesBoxBtn" class="Btn"><div class="toolBarSelectTpl BtnIco"></div><span>选择模板</span></a>
+		<a id="draftsBoxBtn" class="Btn"><div class="toolBarGetDraft BtnIco"></div><span>提取草稿</span></a>
+		<!-- <a id="saveDraftsBtn" class="Btn"><span>保存草稿</span></a> -->
+		<a id="mailBtn" class="Btn"><div class="toolBarMail BtnIco"></div><span>邮件测试</span></a>
+		<a id="mailBtn" class="Btn isFalse"><div class="toolBarCollect BtnIco"></div><span>元素收集(开发中...)</span></a>
+		<a id="helpBtn" class="Btn isFalse"><div class="toolBarHelp BtnIco"></div><span>帮助</span></a>
+		<span id="toolBarLoading"></span>
+	</div>
+	<!-- }}}} 按钮栏 -->
+
+	<div id="copyRight">
+		<!-- Happiness only real when shared <br /> -->
+		AliUED EDM Goblin v1.2α <br />
+		LoadingTime : <span id="jsRunTime"></span>ms
+	</div>
+	<div id="shadowSWF" style="display:none;top:0px;left:0px;position:absolute; z-index:38; overflow:hidden;"></div>
+
+
+	<script type="text/javascript" src="JS/jQuery/jQuery.min.js"></script>
+	<!--<script type="text/javascript" src="JS/jQuery/Ui/Ui.js"></script>-->
+	<!-- {{{{ wait JsBuild -->
+	<script type="text/javascript" src="JS/d6w.js"></script>
+	<script type="text/javascript" src="JS/jQuery/easing.js"></script>
+	<script type="text/javascript" src="JS/jQuery/history.js"></script>
+	<script type="text/javascript" src="JS/jQuery/fileTree.js"></script>
+	<script type="text/javascript" src="JS/jQuery/flash.js"></script>
+	<!-- }}}} wait JsBuild -->
+	<script type="text/javascript" src="JS/FCK/fckeditor.js"></script>	<!-- ** for fck ** -->
+</body>
+</html>

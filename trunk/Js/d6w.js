@@ -761,6 +761,7 @@ $(function(){
 
 
 jQuery.fn.centerScreen = function(x,y,loaded) { 
+				if(this[0].style.display == "none")return;
         var obj = this; 
         if(!loaded) { 
                 obj.css('top', ($(window).height()/2-this.height()/2)+y); 
@@ -775,10 +776,10 @@ jQuery.fn.centerScreen = function(x,y,loaded) {
 		//$("#shadow").show();
 		
 		$("#ctlPanel").centerScreen(0,0);
-		$("#ctlPanel").css({"display":"block"})
+		//$("#ctlPanel").css({"display":"block"})
 		
 		
-		
+
 		setTimeout(function(){
 			 $("#ctlPanelMenu").animate({ top: 0}, 1000, 'easeOutCubic'); 
 			},5000)
@@ -789,5 +790,17 @@ jQuery.fn.centerScreen = function(x,y,loaded) {
 			$("#sendTestEmails").slideToggle(300);
 		})
 		
+		 
+		 $("#copyRight").toggle(function(){
+			 	$("#about").centerScreen(0,0);
+			 	$("#about").fadeIn(500);
+			 	$("#shadowSWF").show();
+			 	$("#shadow").show();
+		 	},function(){
+			 	$("#about").fadeOut(500);
+			 	$("#shadowSWF").hide();
+			 	$("#shadow").hide();
+		 	})
+		 
 		 
 })

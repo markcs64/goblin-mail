@@ -1,0 +1,144 @@
+/** DarkSnow **/
+
+UL.jQfileTree {
+	font:12px "微软雅黑",arial,verdana;
+	line-height: 18px;
+	padding: 0px;
+	margin: 0px;
+	color:#393939;
+	padding-left:5px;
+}
+
+UL.jQfileTree LI {
+	list-style: none;
+	padding: 0 0 0 15px;
+	line-height:26px;
+	width:210px;
+}
+
+
+LI span.item{
+	padding-left:22px;
+	background-repeat:no-repeat !important;
+	background-position:left 5px !important;
+
+	/** for ellipsis **/
+	overflow:hidden;
+	display:block !important;
+	/** hack FF **/
+	max-width:150px;
+	-moz-binding: url('ellipsis.xml#ellipsis');
+	padding-top:5px;
+	height:21px;
+	
+	/* hack ie */
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	*width:150px;
+	*padding-top:0px;
+	*height:26px;
+	*line-height:26px;
+}
+
+
+
+
+UL.jQfileTree LI.current{
+	position:relative;
+	background-image: url(../images/famfamfamAluminum/toolbar.background.gif) !important;
+	cursor:url(../cursor/Arrow.gif),auto;*cursor:url(Style/MAC/cursor/Arrow.gif),auto;
+}
+UL.jQfileTree .currentLeft{
+	position:absolute;top:0px;left:0px;width:5px;height:26px;background:url(../images/famfamfamAluminum/toolbar.start.gif) left top no-repeat;
+}
+UL.jQfileTree .currentRight{
+	position:absolute;top:0px;right:-2px;width:5px;height:26px;background:url(../images/famfamfamAluminum/toolbar.end.gif) right top no-repeat;
+}
+
+UL.jQfileTree .currentLeftB{
+	position:absolute;top:26px;left:0px;width:5px;height:26px;background:url(../images/famfamfamAluminum/toolbar.start.gif) left top no-repeat;
+}
+UL.jQfileTree .currentRightB{
+	position:absolute;top:26px;right:-2px;width:5px;height:26px;background:url(../images/famfamfamAluminum/toolbar.end.gif) right top no-repeat;
+}
+
+UL.jQfileTree .currentLoading{
+	position:absolute;top:5px;right:8px;width:16px;height:16px;background:url(../images/fileTree/spinner.gif) right top no-repeat;
+}
+
+
+UL.jQfileTree LI.mouseHover {
+	background-image: url(../images/famfamfamAluminum/background.light.gif);
+}
+
+
+
+
+/* Core Styles */
+
+.jQfileTree .directory { background-image: url(../images/fileTree/directory.gif) }
+.jQfileTree .expanded { background-image: url(../images/fileTree/folder_open.gif) }
+.jQfileTree .file { background-image: url(../images/fileTree/file.gif) }
+.jQfileTree .wait { background-image: url(../images/fileTree/spinner.gif) }
+
+
+/* File Extensions*/
+.jQfileTree .ext_3gp { background-image: url(../images/fileTree/film.gif) }
+.jQfileTree .ext_afp { background-image: url(../images/fileTree/code.gif) }
+.jQfileTree .ext_afpa { background-image: url(../images/fileTree/code.gif) }
+.jQfileTree .ext_asp { background-image: url(../images/fileTree/code.gif) }
+.jQfileTree .ext_aspx { background-image: url(../images/fileTree/code.gif) }
+.jQfileTree .ext_avi { background-image: url(../images/fileTree/film.gif) }
+.jQfileTree .ext_bat { background-image: url(../images/fileTree/application.gif) }
+.jQfileTree .ext_bmp { background-image: url(../images/fileTree/picture.gif) }
+.jQfileTree .ext_c { background-image: url(../images/fileTree/code.gif) }
+.jQfileTree .ext_cfm { background-image: url(../images/fileTree/code.gif) }
+.jQfileTree .ext_cgi { background-image: url(../images/fileTree/code.gif) }
+.jQfileTree .ext_com { background-image: url(../images/fileTree/application.gif) }
+.jQfileTree .ext_cpp { background-image: url(../images/fileTree/code.gif) }
+.jQfileTree .ext_css { background-image: url(../images/fileTree/css.gif) }
+.jQfileTree .ext_doc { background-image: url(../images/fileTree/doc.gif) }
+.jQfileTree .ext_exe { background-image: url(../images/fileTree/application.gif) }
+.jQfileTree .ext_gif { background-image: url(../images/fileTree/picture.gif) }
+.jQfileTree .ext_fla { background-image: url(../images/fileTree/flash.gif) }
+.jQfileTree .ext_h { background-image: url(../images/fileTree/code.gif) }
+.jQfileTree .ext_htm { background-image: url(../images/fileTree/html.gif) }
+.jQfileTree .ext_html { background-image: url(../images/fileTree/html.gif) }
+.jQfileTree .ext_jar { background-image: url(../images/fileTree/java.gif) }
+.jQfileTree .ext_jpg { background-image: url(../images/fileTree/picture.gif) }
+.jQfileTree .ext_jpeg { background-image: url(../images/fileTree/picture.gif) }
+.jQfileTree .ext_js { background-image: url(../images/fileTree/script.gif) }
+.jQfileTree .ext_lasso { background-image: url(../images/fileTree/code.gif) }
+.jQfileTree .ext_log { background-image: url(../images/fileTree/txt.gif) }
+.jQfileTree .ext_m4p { background-image: url(../images/fileTree/music.gif) }
+.jQfileTree .ext_mov { background-image: url(../images/fileTree/film.gif) }
+.jQfileTree .ext_mp3 { background-image: url(../images/fileTree/music.gif) }
+.jQfileTree .ext_mp4 { background-image: url(../images/fileTree/film.gif) }
+.jQfileTree .ext_mpg { background-image: url(../images/fileTree/film.gif) }
+.jQfileTree .ext_mpeg { background-image: url(../images/fileTree/film.gif) }
+.jQfileTree .ext_ogg { background-image: url(../images/fileTree/music.gif) }
+.jQfileTree .ext_pcx { background-image: url(../images/fileTree/picture.gif) }
+.jQfileTree .ext_pdf { background-image: url(../images/fileTree/pdf.gif) }
+.jQfileTree .ext_php { background-image: url(../images/fileTree/php.gif) }
+.jQfileTree .ext_png { background-image: url(../images/fileTree/picture.gif) }
+.jQfileTree .ext_ppt { background-image: url(../images/fileTree/ppt.gif) }
+.jQfileTree .ext_psd { background-image: url(../images/fileTree/psd.gif) }
+.jQfileTree .ext_pl { background-image: url(../images/fileTree/script.gif) }
+.jQfileTree .ext_py { background-image: url(../images/fileTree/script.gif) }
+.jQfileTree .ext_rb { background-image: url(../images/fileTree/ruby.gif) }
+.jQfileTree .ext_rbx { background-image: url(../images/fileTree/ruby.gif) }
+.jQfileTree .ext_rhtml { background-image: url(../images/fileTree/ruby.gif) }
+.jQfileTree .ext_rpm { background-image: url(../images/fileTree/linux.gif) }
+.jQfileTree .ext_ruby { background-image: url(../images/fileTree/ruby.gif) }
+.jQfileTree .ext_sql { background-image: url(../images/fileTree/db.gif) }
+.jQfileTree .ext_swf { background-image: url(../images/fileTree/flash.gif) }
+.jQfileTree .ext_tif { background-image: url(../images/fileTree/picture.gif) }
+.jQfileTree .ext_tiff { background-image: url(../images/fileTree/picture.gif) }
+.jQfileTree .ext_txt { background-image: url(../images/fileTree/txt.gif) }
+.jQfileTree .ext_vb { background-image: url(../images/fileTree/code.gif) }
+.jQfileTree .ext_wav { background-image: url(../images/fileTree/music.gif) }
+.jQfileTree .ext_wmv { background-image: url(../images/fileTree/film.gif) }
+.jQfileTree .ext_xls { background-image: url(../images/fileTree/xls.gif) }
+.jQfileTree .ext_xml { background-image: url(../images/fileTree/code.gif) }
+.jQfileTree .ext_zip { background-image: url(../images/fileTree/zip.gif) }
+.jQfileTree .ext_rar { background-image: url(../images/fileTree/zip.gif) }

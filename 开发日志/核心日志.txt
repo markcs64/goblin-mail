@@ -1,0 +1,427 @@
+所有fileTree的图标是png的  ie6下使用不良 使用FotoBatch批量转换成gif
+
+对于默认图标的设定 无需用php 对于css来说就很方便了  这种思想是设定默认图标  后面一个带扩展名的class 里面有important bg来覆盖 当然没有找到这个扩展名的class就是默认图标了~~~省掉一层判断~~hoho~~
+
+0.1
+	基于ae....囧 后来狠心放弃了 下了决心要做好这个东东
+	详细看goblin.2008
+	不过以后网站上要写应用 使用这个方案!!特别是控制面板那块!!
+	还有里面的样式....兼容多浏览器的跟随滚动条平滑的滚动!!
+	它的开发日志里面也写了好多好多领悟  没事翻一下回忆回忆
+
+	mail核心还可以调用
+
+0.2版本
+	采用JQuery框架
+	预览用iframe
+
+0.3版本
+	完成FCK对接&配置 默认选择macskin
+
+
+3:12 2009-1-3
+基本完成了对fileTree的改造工作
+
+bug : 在文件夹收回效果动画过程中如果文件夹中有选中项目  样式会停留...
+
+解决: fileTree增加第三个参数  类型为函数  在效果触发前调用callback 在里面写好清除最后选取项样式和左右两翼小装饰  ...
+
+
+
+
+12:54 2009-1-3
+完成与右侧demoiframe的对接   完成载入状态图标
+
+
+0.4版本
+	引入fileTree 完成JQ fileTree对接 对原版fileTree大改
+
+
+13:36 2009-1-3
+重整目录结构 
+
+把css images cursor都放入风格文件夹归类
+
+命名...第一版本MAC风格 其中部分风格参照引用FCK中famfamfamAluminum
+
+来点甜点....放置我喜欢的mac鼠标指针
+
+13:50 2009-1-3
+CSS只使用一个import  main.css 其它css在其内部import  方便后期换皮肤
+
+重新整理JS目录结构   把me提取出来  变为i 放在JS根目录
+
+
+0.5版本
+	
+	整理乱糟糟的文件夹结构  支持多skin
+
+
+14:04 2009-1-3
+$.fn.toBeEditor 方法config加入初始化编辑器类型变量->iConfig.type 从此统一接口 都用这个初始化 
+
+$.fn.editorSetData也一样  根据self.config.type来判断用什么编辑器的赋值方式
+
+
+0.6版本
+	采用自创的fn.tobe代码结构风格
+
+
+14:53 2009-1-3
+
+FCK默认皮肤会加上自己的basePath相对 这里使用分隔函数找到url根路径 把skinPath转为绝对
+var sBasePath = document.location.href.substring(0,document.location.href.lastIndexOf('/')) ;
+if(config.skinPath){oFCKeditor.Config['SkinPath'] = sBasePath + "/" +config.skinPath;}
+
+
+15:24 2009-1-3
+自定义鼠标风波
+在css里下还是不认相对..也就是说不基于css相对....可恶...cursor始终是相对于打开页面的
+
+cursor:url(../cursor/Hand.cur),auto;/*兼容IE FF 注意ff不支持ani*/
+_cursor:url(Style/MAC/cursor/Hand.cur),auto;/*IE是相对于页面*/
+
+
+例如，像下面的参数都是被允许的：
+cursor: url(foo.cur), url(http://www.example.com/bar.gif), auto;
+注意两个小问题：
+1.firefox 暂时不支持 .ani
+2.下面两个写法 firefox 都无法正确执行。
+cursor: url(foo.cur);
+后面没有 auto或者 pointer 等标准属性。
+cursor: url(foo.cur), pointer, url(bar.cur), auto;
+uri 必须在前，标准属性在后。
+
+
+15:39 2009-1-3
+晕菜...2个小时只搞定样式的结构....
+
+16:42 2009-1-3
+神奇的
+-moz-binding: url('ellipsis.xml#ellipsis');
+在ff中兼容超长文字打点 模拟text-overflow:ellipsis
+
+line-height失效  强行用hack调整   改小height  增加padding-top
+
+这个可以拿去共享 骗骗稿费糊糊口
+
+
+17:30 2009-1-3
+封装草稿箱  使用淡出淡入来激活面板
+
+
+
+
+17:39 2009-1-3
+//=[ 功能组 : 草稿箱  | 功能组优势  内存方法 静默方式 不像fn扩展那样一次就执行  后期可以调用  而且基于对象 后期页面中可以改写内部方法 ]=------------------------------------------------->>>
+$.NaviGation = {
+}
+
+// 还是用fn扩展好了....反正有优势也有缺点  还是比较喜欢多例 虽然写起来会有些不习惯...拼了~~
+
+
+版本 0.6 变化
+使用新的fn结构编写
+完成iframe预览 和php取无失真文件内容->fck编辑器的功能
+
+
+19:37 2009-1-3
+平时喜欢收集小图标  
+在F:\-盒子-\[=] [收集的资源]\设计用图片\GIF小图标[网页设计]里找了1小时资源
+
+
+
+20:11 2009-1-3
+萌生采集箱的概念
+浏览多个模板或草稿采集到的内容
+
+
+0:59 2009-1-4
+偶尔发现一个不错的效果 loading图标小时用hide(延时)  这样别人知道是ajax取的  昙花一现的感觉也不错~
+
+0.7版本
+	第2版本fn风格
+	封装第一个大型模块  草稿箱
+	调整样式 优化风格
+
+
+1:14 2009-1-4
+在取草稿的功能开发时又遭遇乱码问题
+中文的path取不到
+//烦躁个解码  js那头对应
+
+新方法~
+
+js这边
+filePath : encodeURI(nowItem.attr("path"))
+
+php那边
+$filePath = $_REQUEST["filePath"];
+$filePath = iconv("utf-8","gb2312",urldecode($filePath)); 
+
+囧
+发现只要php那边就ok了~~~
+js这边原方式传参  过去值是utf-8
+$.post(config.script, { action : "READFILE" , filePath : "乱七八糟/该死的编码.txt" }, function(data) {
+
+php那边吧utf-8->gb2312去兼容该死的系统编码
+$filePath = iconv("utf-8","gb2312",$filePath); 
+  然后就能击中目标文件夹了  哦耶~
+
+
+
+实验失败  服务端取file列表还是失败... fopen编码根本不走这条路 这是js和php之间2:07 2009-1-4的乱码
+
+
+0.8版本
+	解决交互乱码问题
+
+1:38 2009-1-4
+发现一个问题 
+
+我用上侧编辑区域95% 下侧工具栏4%的布局
+发现FF下FCK无法正常扩充到95%  后来发现是textarea外围form没有定义高100%....取不到相对值...囧
+
+1:42 2009-1-4
+FF下遭遇报错XULElement.accessibleType
+原因未明...公司不会..估计自己ff配置有问题
+
+
+4:20 2009-1-4
+困得不行  完成了下侧工具栏的美化....mac风格....
+在css中统一了关于图标的定义方式  Btn  规范化了
+再度清理文件夹 清晰结构
+
+
+19:35 2009-1-4
+受不了了   正式启用History功能
+
+23:24 2009-1-4
+开始一BAK一版本策略
+
+版本0.9 改变
+	第3版fn结构
+	采用明显的注释分隔代码区域
+	增加url history
+	PS.#run.draftsBox.showIt();
+
+
+0:04 2009-1-5
+顺应history的加入 随时加入document.title标明当前状态
+
+
+
+3:00 2009-1-5
+解决大BUG!!!
+
+晕死  发现增加url方式取文件时候fck无法正常初始化 开始还以为是iframe前后 还以为是fckbug 不允许有其它iframe出现....
+
+晕菜 
+
+最后发现风格设定那里被自己写的取风格路径方法搞死了
+
+		var url = document.location.href.split("#")[0];		var sBasePath = url.substring(0,url.lastIndexOf('/')) ;
+
+原来使用document.location.href 还没有截断#  难怪fck出不来  因为风格路径取不到!!!
+
+原来document.location.href是取最后一个iframe的路径的....
+
+使用 window.location.href后一切风平浪静!!!	
+
+
+
+
+3:08 2009-1-5
+困得要死
+
+迷糊的时候容易写经典
+
+				try{
+					var editor = FCKeditorAPI.GetInstance(self.editorId);
+					if(editor.EditMode == FCK_EDITMODE_SOURCE)editor.EditMode = FCK_EDITMODE_WYSIWYG;
+					editor.SetData(content);
+				}catch(e){
+					self.innerText = content;
+				}
+
+这个猛吧....找不到就先复制给textarea...怎么都跑不掉...
+
+
+
+3:27 2009-1-5
+http://localhost/goblinJ/goblin.html#run.d6wEditor.setEditorDataFromFile('Drafts/中文.html','fromURL')
+这次中文编码没出来捣乱....hoho   默认支持中文url路径
+
+
+0.9版本
+	解决一个fck和现有页面iframe的大bug!!
+	增加两个history布点...一个是默认预览  一个是默认打开编辑      还待加强...考虑多窗口状态根据url history初始化!!!
+	
+	
+	
+	10:39 2009-1-5
+	html分块注释采用
+	开始:<!-- {{{{ ** something ** --> 结束:<!-- }}}} ** something ** --> 
+	UE或NotePad2点击随便一个"{"后配对高亮就起来了 方便跟踪
+	
+	好处很多....可以用在模板上    
+	这个又可以分享骗稿费
+
+
+
+16:01 2009-1-5
+    css hack采用*  这样ie6&7都匹配了 原来用_只对ie6有效
+    
+    
+    
+1:45 2009-1-6
+写好了php那边的目录json生成~~
+
+
+
+0:52 2009-1-7
+使用id即全局变量  在每个fn体内定义地方都写了此类操作  id是什么用它作变量就可以访问到对应dom节点
+这样调用方法就方便多了 也保证了唯一性
+
+history这样也很好写了  敏捷啊~~ url的意思也清晰明了 hoho
+
+
+
+增加了半透明层
+
+
+
+
+0:26 2009-1-8
+
+别走太远...记录一下  这个版本做的事情太多了
+
+ ...Goblin v1.0 α
+ 首先说支持的东西
+ 
+ 1.
+ 模板箱都制作完毕
+ 2.
+ 草稿箱制作完毕
+ ----------------------
+	 ps.这两个是辛苦编写的fileBrower的派生对象,完全支持多例,多对象互不冲突..最大的好处,
+	 下方tab选择时候各执行各的 完全随意控制 当然一些诸如最后选择的记录还是要全局TEMP来存储的
+ 3.
+ 增加了保存当前编辑页面到草稿的功能  默认以当前时间作为文件名  虽然现在是简单的js弹出对话框 以后会做更加漂亮
+ 
+ 4.history的fn制式支持
+ 
+ 5!!!!!
+	很有价值的改进 --- 所有fn派生对象都写入eval(id)把对象id设为全局...见(0:52 2009-1-7日志)
+	$.fn.toBeXN = function(myConfig) {
+		var DOM = this.get(0);if(eval("typeof("+DOM.id+")") == "undefined"){eval(DOM.id + " = DOM;");}//DOMID -> 全局
+		var SELF = this;
+		var config = DOM.config = $.extend({...........},myConfig);
+		DOM.build = function(){......}
+		
+		
+		 
+ 6.调整fck样式,编辑器文字大小,按钮间距等,几个地方磨破头皮...比如样式\文字大小等下拉框宽度,没有开放API接口,自己改了核心文件
+	fckeditorcode_ie.js&fckeditorcode_gecko.js()
+	FIND:if C.style.height=E+'px'...
+	modify...  {C.style.height=400+'px'; C.style.width=400+'px';} else {C.style.height='';} 
+ 
+ 7.	自定义编辑器工具条插件 比如表格操作插件
+	自己增加了几个ali EDM的headLine等样式.
+	加入了我们可能用到的斜体 版权字体 文字自右向左等样式  
+	几种我们网站常用字体
+	
+ 8. 初步设计布局拖拽模式
+	设想方案是关闭fck的editible 然后调用js渲染拖拽class元素 让它可拖拽
+	
+	关它里面的iframe还不容易....ie  ff还不同
+	
+	目前这样写的....ps.本来ie也能用designMode off关  但是关了里面js就没用了
+			jQuery.each(jQuery.browser, function(i) {
+			  if($.browser.msie){
+			     editorInstance.EditorDocument.body.contentEditable = false;
+			  }else{
+			     editorInstance.EditorDocument.designMode = "off";
+			  }
+			});
+ 
+ 9 重新规划了一下变量命名格式
+	$obj代表jq元素 也就是相当于$(obj.id)
+	var obj就代表dom元素
+	
+	fn体内
+		var DOM = this.get(0);
+		var SELF = this;    
+ 
+
+ 
+ 准备增加资源采集 代号SCV 人类资源采集者...农民....
+ 准备增加保存草稿\发送邮件等操作的状态提示
+ 
+------------------------------------------------------------------------------ 以上是1.0a
+ 
+ 3:55 2009-1-8
+ 提速 全部cur鼠标指针转为gif格式....为了能被缓存
+ 
+ 
+ 
+ 13:41 2009-1-8
+ 增加了FCK保存草稿按钮插件  并且在fckconfig里映射了ctrl+s为快捷键
+ 
+ 
+ 
+ 1:44 2009-1-9
+ 清理标签  根据young他们的想法改进alpha版本.... 
+ 
+UI再度制作
+
+	关闭按钮的制作
+	按钮全部为a
+
+
+23:51 2009-1-9
+	白天给大家看了看  ...看来我这个东西别人还是挺喜欢的....
+	修复了几个选取样式问题
+
+------------------------------------------------------------------------------ 以上是1.1a
+
+
+23:41 2009-1-10
+	元素录入的方式 ie下由
+	contentEditable="true" 和 ondragstart="event.dataTransfer.effectAllowed='copy';" 华丽的配合搞定了拖拽复制元素加入编辑器
+	
+	FF下就比较土了  用insert按钮来插入.....  插入时候是在编辑器最后的文本焦点位置
+	
+	不爽的是jqui加拖拽时候会加入自己的属性.....看来要自己写拖拽了
+	
+2:53 2009-1-11
+	加入很多零碎小玩意 比如载入完毕后播放声音 onlyfor ie  飘雪 
+	活化底部载入滚动条
+	皮肤路径是读取所在页面id为css的style元素来获取   获取后给$.I.config.skinPath
+	
+	
+23:25 2009-1-11
+	建立Apps文件夹....为之后的swffp结构做铺垫  主config负责app指引和重写地址...可能会被htaccess代替  项目app负责项目全局变量和皮肤模板选取等操作....
+	
+------------------------------------------------------------------------------ 以上是1.2a
+	
+0:12 2009-1-12
+	自己写了个简易拖拽用于scv资源采集箱...
+					if (event.preventDefault) event.preventDefault();
+				if (event.stopPropagation) event.stopPropagation();
+	这两句强化了效能  ie下拖拽在有alpha背景的情况下基本上不丢帧了...
+	
+	
+1:19 2009-1-12 
+	引入effect开关..差机子效能提升..默认关闭所有特效  以后制作控制面板搞定这些控制  
+	引入了居中的层 并开启有缓冲居中面板的效果  准备搞email面板........甚至是控制面板....
+	
+	有时间把app结构整整
+	引入CG....找了几个关键点 都布置了CG  IE下应该是有一些效能提升的.....
+	防止内存溢出\cpu百分百等问题~
+
+2:58 2009-1-12
+	使用setCapture和releaseCapture来锁定拖拽对象...
+	后来发现了他们更重要的作用....
+	
+	保护编辑窗口............今天太累 明天再弄了....晚安....

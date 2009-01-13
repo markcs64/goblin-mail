@@ -1,0 +1,180 @@
+@charset "utf-8";
+/** 我的命名习惯   : 横 Left - Center - Right **  竖 Top | Middle | Bottom **/
+
+/** 引入 **/
+@import url("fileTree.css"); /** for fileTree **/
+/** 引入 **/
+
+/**------------------------------------------------------------------| >>>> 常规样式 |**/
+body{overflow:hidden;_overflow:hidden;_height:100%;height:100%;}
+html{overflow:hidden;height:100%;}
+
+@media all and (min-width:0px){body{overflow:hidden;}}/** just for opera **/
+body, input ,textarea{font:12px "微软雅黑",arial,verdana;margin:0px;}
+body{cursor:url(../cursor/Arrow.gif),auto;*cursor:url(Style/MAC/cursor/Arrow.gif),auto;}
+
+/* 解决IMG&Div空隙问题 Div&Div空隙问题 */
+img{display:inline-block;}
+p{margin:0px;}
+a{color:#4D4D4D;text-decoration:none;cursor:url(../cursor/Hand.gif),pointer;*cursor:url(Style/MAC/cursor/Hand.gif),pointer;hide-focus:expression(this.hideFocus=true);outline:none;}
+a img{border:none;}
+a:hover{color:#8F4116;}
+/**------------------------------------------------------------------| <<<< 常规样式 |**/
+
+/**------------------------------------------------------------------| >>>> 页面元素样式 |**/
+/** CR **/
+#copyRight{color:#6C6C6C;border-left:4px solid #6C6C6C;padding-left:5px;position:fixed;_position:absolute;bottom:5px;right:15px;font:bold 10px verdana;z-index:1206;}
+
+/** 全页覆盖背景层 **/
+/** ie下更好看的背景效果 缺点:耗资源 .alphaBG{position:fixed;_position:absolute;left:0px;top:0px;height:100%;width:100%;background:#3D3D3D;text-align:center;filter:progid:DXImageTransform.Microsoft.Alpha(style=1,startY=0,finishY=100,startX=0,finishX=100,opacity=25,finishOpacity=80);-moz-opacity:0.6;opacity:0.6;z-index:1212;}*/
+.shadow{display:none;position:fixed;_position:absolute;left:0px;top:0px;height:100%;width:100%;background:#3D3D3D;text-align:center;filter:alpha(opacity=70);-moz-opacity:0.7;opacity:0.7;z-index:37;}
+/** notice **/
+
+/** fileBrowser **/
+.FBBox{position:absolute;height:88%;width:100%;margin:18px;display:none;z-index:1129;}
+.FBList{float:left;position:relative;overflow:auto;width:250px;height:100%;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:2px solid #BBBBBB;}
+.FBShowRoom{position:relative;margin:0 30px 0 265px;height:100%;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:2px solid #BBBBBB;}
+.FBIframe{position:relative;width:96%;height:96%;left:2%;top:2%;}
+
+/** fileBrowser的按钮定义 PS.粘在文件树边上的关闭和重载小按钮 **/
+.FBBox .Btn{position:absolute;display:block;height:16px;width:16px;top:5px;background-repeat:no-repeat !important;z-index:1985;cursor:url(../cursor/Hand.gif),pointer;*cursor:url(Style/MAC/cursor/Hand.gif),pointer;}
+.FBBox .Btn.FBCloseBtn{width:30px;height:30px;right:18px;top:-18px;background:url(../images/main/draftsBoxCloseBtn.gif);}
+.FBBox .Btn.FBCloseBtn:hover{background-image:url(../images/main/draftsBoxCloseBtnActive.gif);}
+.FBBox .Btn.FBReloadBtn{left:234px;background-image:url(../images/main/draftsBoxReloadBtn.gif);}
+
+/** fileBrowser的按钮定义 PS.选中文件后下面面板里面的小按钮 **/
+.FBToolBar{height:26px;line-height:26px;padding:0 5px;overflow:hidden;}
+.FBToolBar .Btn{position:static;height:26px;padding-left:18px;width:32px;color:#6F6C6C;float:right;display:block;background-position: 0 4px;background-repeat:no-repeat !important;z-index:1985;cursor:url(../cursor/scross.gif),pointer;*cursor:url(Style/MAC/cursor/scross.gif),pointer;}
+.FBToolBar .Btn:hover{margin-top:-1px;color:#8F4116;}
+
+.FBEditBtn{background-image:url(../images/main/draftEditBtn.gif);}
+.FBDelBtn{background-image:url(../images/main/draftDelBtn.gif);}
+
+
+.mailBox{position:absolute;z-index:1204;width:400px;height:250px;text-align:center;display:none;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:2px solid #BBBBBB;}
+
+/** SCV **/
+.SCV{z-index:1204;position:absolute;right:50px; top:50px;width:150px;height:400px;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:2px solid #BBBBBB;}
+.SCV li.scvBox{ padding:10px;display:block;width:120px;height:120px;overflow:hidden;background-image:url(../images/famfamfamAluminum/background.light.gif);margin:5px;}
+.SCV li.scvHandle{display:block;width:100%;line-height:20px;height:20px;background-image:url(../images/famfamfamAluminum/background.light.gif);cursor:url(../cursor/MoveHand.gif),pointer;*cursor:url(Style/MAC/cursor/MoveHand.gif),hand;}
+
+/** for jQfileTree PS.gifsor属性特殊处理 **/
+UL.jQfileTree LI {
+	cursor:url(../cursor/Hand.gif),pointer;/** 兼容FF 注意ff不支持ani **/
+	*cursor:url(Style/MAC/cursor/Hand.gif),pointer;/** IE是相对于页面 **/
+}
+
+/** toolBar **/
+#toolBar{height:5%;width:100%;background:url(../images/famfamfamAluminum/background.dark.gif);position:fixed;*position:absolute;bottom:0px;left:0px;padding:6px 0 0 0;z-index:1205;}
+#toolBar .Btn{position:relative;float:left;display:block;padding:0 0 1px 15px;margin:0 0 0 18px;*margin:0 0 0 6px;height:26px;line-height:26px;background:url(../images/famfamfamAluminum/toolbar.longstart.gif) no-repeat;z-index:1985;hide-focus:expression(this.hideFocus=true);outline: none;}
+#toolBar .isFalse{filter:alpha(opacity=50);-moz-opacity:0.5;opacity:0.5;}
+#toolBar .Btn:hover{margin-top:-1px;}
+#toolBar .isFalse:hover{margin-top:0px;color:#4D4D4D;}
+#toolBar .Btn span{display:block;*display:inline-block;height:26px;padding:0 15px 0 20px;background:url(../images/famfamfamAluminum/toolbar.end.gif) top right no-repeat;}
+#toolBar .Btn.underLine{color:#8F4116;border-bottom:2px solid #B03933;margin-top:-1px;}   
+#toolBar .Btn .loading{position:absolute;right:-32px;top:2px;width:10px;height:10px;background:url(../images/main/spinner3.gif) no-repeat;}
+#toolBarLoading {float:right;margin:0 170px 0 15px;display:block;*display:inline-block;width:56px;height:26px;background:url(../images/main/toolBarLoading.gif) left center no-repeat;}
+
+/*工具条图标*/
+#toolBar .BtnIco{position:absolute;background-position:center left; background-repeat: no-repeat; width:16px;height:26px;}
+.toolBarSelectTpl{background-image:url(../images/main/toolBarSelectTpl.gif);}
+.toolBarGetDraft{background-image:url(../images/main/toolBarGetDraft.gif);}
+.toolBarMail{background-image:url(../images/main/toolBarMail.gif);}
+.toolBarCollect{background-image:url(../images/main/toolBarCollect.gif);}
+.toolBarHelp{background-image:url(../images/main/toolBarHelp.gif);background-position:4px left !important;}
+
+
+/**------------------------------------------------------------------| <<<< 页面元素样式 |**/
+
+/**------------------------------------------------------------------| >>>> 辅助样式 |**/
+.xHide{display:none;}/** 页面模板隐藏区 **/
+.Zpad{padding:0px;}
+.clearfix:after { content: "."; display: block;font-size:0;line-height:0; height: 0; clear: both; visibility: hidden;}
+.clearfix {display: inline-table;zoom:1;}
+/* Hides from IE-mac \*/
+.clearfix {_height: 1%;display: block;}
+.b{font-weight: bold;}
+.red{color:red;}
+.brown{color:brown;}
+.smallE{font-size:10px;font-weight:bold;font-family:arial;}  
+.none {display:none;}
+/* -------+- [ Div强制换行 | PS: ] -+------- */
+.Div_br{word-break:break-all;width:200px;}
+/* -------+- [ 不换行 | PS: ] -+------- */
+.nobr {
+	overflow: hidden;
+	text-overflow:ellipsis;
+	word-break:keep-all;
+	white-space:nowrap;
+}
+/* -------+- [ 横向虚线段 | PS: ] -+------- */
+.line_dashed_x {
+	width:100%; /*设定层的宽度*/
+	margin:0px; /*层居中*/
+	height:0px; /*设定高度*/
+	border-top:1px dashed #EFEFEF; /*画一条浅灰色虚线*/
+	clear:both; /*清除浮动*/
+	overflow:hidden;
+}
+
+/* -------+- [ 纵向虚线段 | PS: ] -+------- */
+.line_dashed_y {
+	width:1px; /*设定层的宽度*/
+	margin:0px; /*层居中*/
+	height:100px; /*设定高度*/
+	border-left:1px dashed #EFEFEF; /*画一条浅灰色虚线*/
+	overflow:hidden;
+}
+/* -------+- [ 滤镜:透明度 | PS:兼容各种浏览器的透明样式 ] -+------- */
+.transparent{
+ filter:alpha(opacity=50);
+ -moz-opacity:0.50;/* 兼容FF */
+ opacity:0.50;/* 兼容其它 */
+}
+.alpha{
+ filter:alpha(opacity=50);
+ -moz-opacity:0.50;/* 兼容FF */
+ opacity:0.50;/* 兼容其它 */
+}
+.Shadow_1{
+filter:dropshadow(color=#FFCCFF,offx=1,offy=1,positive=1);
+} 
+.Shadow_2{
+	position:absolute;/*一定要定位为活动??*/
+	filter:DropShadow(Color=#CCCCCC, OffX=1, OffY=1, Positive=2);
+}
+/**------------------------------------------------------------------| <<<< 辅助样式 |**/
+
+/**------------------------------------------------------------------| >>>> D6W缩写记录 |**/
+/*
+配色参考
+http://www.2s-space.com/studiov2/index.asp
+
+
+#336699 ->　#369;
+
+background 颜色 附件 位置 重复 定位
+background:#f00 url(background.gif) left top no-repeat fixed; 
+
+border 宽度 风格 颜色
+border-top:1px solid #D2D2D2 !important;
+
+font
+{
+all:
+font:italic small-caps bold 1em/140% "Lucida Grande",sans-serif; 
+other:
+font:0.8em verdana;
+font:75%/150% arial;
+font:bold 11px tahoma;
+}
+
+list
+list-style-type:square; 
+list-style-position:inside; 					-> list-style:square inside url(image.gif);
+list-style-image:url(image.gif); 
+
+
+经典 用a visited来记录哪篇读了
+*/
+/**------------------------------------------------------------------| <<<< D6W缩写记录 |**/

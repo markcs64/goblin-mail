@@ -215,7 +215,7 @@ $.fn.toBeFileBrowser = function(myConfig) {
 					effect : {
 							fadeShow : false,
 							fadeList : false,
-							bgSWF : true
+							bgSWF : false
 						}
 		},myConfig);
 
@@ -343,14 +343,14 @@ $.fn.toBeFileBrowser = function(myConfig) {
 				
 				$(DOM.config.onOffBtn).addClass("underLine");
 
-				try{DOM.build();}catch(e){}
+				if(!DOM.builded){DOM.build();}
 				document.title = $.I.Titles.main + DOM.config.title;
 				$(config.shadow).show();
 				if(DOM.config.effect.bgSWF){$(config.shadowSWF).show();}
 				if(DOM.config.effect.fadeShow){
 					$SELF.fadeIn(delay,function(){});
 				}else{
-					$SELF.css({"display":"block"});
+					DOM.style.display = "block";
 				}
 				DOM.alreadyShow = true;
 				//$.iHistory.makeUrl(self,"showIt()");
@@ -370,7 +370,7 @@ $.fn.toBeFileBrowser = function(myConfig) {
 						DOM.alreadyShow = false;
 					});
 				}else{
-					$SELF.css({"display":"none"});
+					DOM.style.display = "none";
 					DOM.alreadyShow = false;
 				}
 				//$.iHistory.makeUrl(self,"hideIt()");
@@ -724,9 +724,13 @@ $(function(){
 
 		$("#scvHandle").bind("mousedown",function(){
 			if($.browser.msie)this.setCapture();
+			
 			$("body").bind("mousemove",function(event){
 				//for ff ... == setCapture
-				window.getSelection && window.getSelection().removeAllRanges();
+				if(window.captureEvents){
+					//window.captureEvents(Event.MOUSEMOVE|Event.MOUSEUP);   
+					//window.getSelection && window.getSelection().removeAllRanges();
+				}
 				
 				if (event.preventDefault) event.preventDefault();
 				if (event.stopPropagation) event.stopPropagation();
@@ -734,38 +738,56 @@ $(function(){
 				 
 				//if($.browser.msie)CollectGarbage();
 				//window.status = (event.screenY - $(window).height());
-				$("#SCV").css({"left":event.pageX-120 + "px","top":event.pageY - 15 + "px"});
-				//$("#SCV")[0].style.left = event.pageX-120;
-				//if((event.screenY - $(window).height())>75)return;
-				//$("#SCV")[0].style.top = event.pageY-10;
+				//$("#SCV").css({"left":event.pageX-120 + "px","top":event.pageY - 15 + "px"});
+				$("#SCV")[0].style.left = event.pageX-120 + "px";
+				if((event.screenY - $(window).height())>75)return;
+				$("#SCV")[0].style.top = event.pageY-20 + "px";
 				//if (event.stopPropagation) event.stopPropagation();
 			});
+			
+			$("body").bind("mouseup",function(){
+				if($.browser.msie)$("#scvHandle")[0].releaseCapture();
+				$("body").unbind("mousemove");
+			});
+			
 		})
-		$("#scvHandle").bind("mouseup",function(){
-			if($.browser.msie)this.releaseCapture();
-			$("body").unbind("mousemove");
-		})
-		
+
+
+
+
+
 
 //居中扩展
 
 
-jQuery.fn.centerScreen = function(loaded) { 
+jQuery.fn.centerScreen = function(x,y,loaded) { 
         var obj = this; 
         if(!loaded) { 
-                obj.css('top', $(window).height()/2-this.height()/2); 
-                obj.css('left', $(window).width()/2-this.width()/2); 
-                $(window).resize(function() { obj.centerScreen(!loaded); }); 
+                obj.css('top', ($(window).height()/2-this.height()/2)+y); 
+                obj.css('left', ($(window).width()/2-this.width()/2)+x); 
+                $(window).resize(function() { obj.centerScreen(x,y,!loaded); }); 
         } else {
                 obj.stop(); 
-                obj.animate({ top: $(window).height()/2-this.height()/2, left: $ (window).width()/2-this.width()/2}, 600, 'easeInBack'); 
+                obj.animate({ top: ($(window).height()/2-this.height()/2)+y, left: ($ (window).width()/2-this.width()/2)+x}, 600, 'easeInBack'); 
         }
 } 
         
-		$("#shadow").show();
+		//$("#shadow").show();
 		
-		$("#mailBox").centerScreen();
-		//$("#mailBox").css({"display":"block"})
+		$("#ctlPanel").centerScreen(0,0);
+		$("#ctlPanel").css({"display":"block"})
+		
+		
+		
+		setTimeout(function(){
+			 $("#ctlPanelMenu").animate({ top: 0}, 1000, 'easeOutCubic'); 
+			},5000)
+		
+		
+		$("#manageEmAddressBtn").click(function(){
+			$("#manageEmAddress").slideToggle(300);
+			$("#sendTestEmails").slideToggle(300);
+		})
 		
 		
 })

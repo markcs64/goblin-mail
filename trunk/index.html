@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -35,9 +35,42 @@
 		<a id="draftsBoxReloadBtn" class="FBReloadBtn Btn" title="刷新草稿文件夹"></a>
 	</div>
 	<!-- }}}} 草稿箱 -->
-	
-	<div id="mailBox" class="mailBox">
+
+
+	<div id="ctlPanelMenu" class="ctlPanelMenu">
 		...
+	</div>
+	
+	<div id="ctlPanel" class="ctlPanel">
+		<div style="text-align:center;margin:10px;">
+			
+			<div id="" style="text-align:right;background:#939393;padding:5px;">发送测试邮件</div>
+			<div id="sendTestEmails" style="height:60px;">
+				测试邮件标题 : <input value="TEST MAIL" />
+				<br />
+				<input type="button" value="发送" />
+			</div>
+			
+			<div id="manageEmAddressBtn" style="text-align:right;background:#939393;padding:5px;">管理收件人地址</div>
+			<div id="manageEmAddress" style="display:none;">
+				<div id="addEmailAddress" style="line-height:40px;height:40px;">
+					邮件发送地址 : <input style="line-height:40px;height:40px;width:300px;padding:5px;font-size:20px;font-family:Tahoma;color:#5F5F5F;" value="snow@xunuo.com;i@xunuo.com" /> ->
+				</div>
+				<div>
+					<select multiple >
+						<option>i@xunuo.com</option>
+						<option>i@xunuo.com</option>
+						<option>i@xunuo.com</option>
+						<option>i@xunuo.com</option>
+						<option>i@xunuo.com</option>
+					</select>	
+				</div>
+				<div>
+					<input type="checkbox" /> 记住我的设置	
+				</div>
+			</div>
+		</div>
+		
 	</div>
 	
 	
@@ -102,9 +135,8 @@ jjjjjjjjjjj
 	<div id="toolBar">
 		<a id="templatesBoxBtn" class="Btn"><div class="toolBarSelectTpl BtnIco"></div><span>选择模板</span></a>
 		<a id="draftsBoxBtn" class="Btn"><div class="toolBarGetDraft BtnIco"></div><span>提取草稿</span></a>
-		<!-- <a id="saveDraftsBtn" class="Btn"><span>保存草稿</span></a> -->
 		<a id="mailBtn" class="Btn"><div class="toolBarMail BtnIco"></div><span>邮件测试</span></a>
-		<a id="mailBtn" class="Btn isFalse"><div class="toolBarCollect BtnIco"></div><span>元素收集(开发中...)</span></a>
+		<a id="collectBtn" class="Btn isFalse"><div class="toolBarCollect BtnIco"></div><span>元素收集(开发中...)</span></a>
 		<a id="helpBtn" class="Btn isFalse"><div class="toolBarHelp BtnIco"></div><span>帮助</span></a>
 		<span id="toolBarLoading"></span>
 	</div>

@@ -177,6 +177,7 @@ $.fn.toBeEditor = function(myConfig) {
 		if(config.skinPath){oFCKeditor.Config['SkinPath'] = sBasePath + "/" +config.skinPath;}
 		oFCKeditor.Config['CustomConfigurationsPath'] = sBasePath + "/" + config.customConfigFile ;
 		oFCKeditor.ToolbarSet	= config.toolbarSet;
+		oFCKeditor.TabSpaces = 1;
 		oFCKeditor.Config['ToolbarStartExpanded'] = config.toolbarStartExpanded;
 		oFCKeditor.Config['FullPage'] = config.fullPage;
 		oFCKeditor.Height = config.height;

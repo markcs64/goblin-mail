@@ -556,6 +556,7 @@ function FCKeditor_OnComplete(editorInstance){
 		//alert("");
 	})
 	*/
+	/*
 	spans.bind("click",function(e){
 		//editorInstance.EditorWindow.parent.document.body.focus();
 		//setTimeout(function(){inputfc.focus();},100);
@@ -565,6 +566,7 @@ function FCKeditor_OnComplete(editorInstance){
 		this.designMode = "Off"; 
 	})
 	
+	*/
 	
 	if($.browser.msie)CollectGarbage();
 	

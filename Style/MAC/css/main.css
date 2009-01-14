@@ -23,7 +23,7 @@ a:hover{color:#8F4116;}
 
 /**------------------------------------------------------------------| >>>> 页面元素样式 |**/
 /** CR **/
-#copyRight{color:#6C6C6C;border-left:4px solid #6C6C6C;padding-left:5px;position:fixed;_position:absolute;bottom:5px;right:15px;font:bold 10px verdana;z-index:1206;}
+#copyRight{color:#6C6C6C;border-left:4px solid #6C6C6C;padding-left:5px;position:fixed;_position:absolute;bottom:5px;right:15px;font:bold 10px verdana;z-index:1206;cursor:url(../cursor/Hand.gif),pointer;*cursor:url(Style/MAC/cursor/Hand.gif),pointer;}
 
 /** 全页覆盖背景层 **/
 /** ie下更好看的背景效果 缺点:耗资源 .alphaBG{position:fixed;_position:absolute;left:0px;top:0px;height:100%;width:100%;background:#3D3D3D;text-align:center;filter:progid:DXImageTransform.Microsoft.Alpha(style=1,startY=0,finishY=100,startX=0,finishX=100,opacity=25,finishOpacity=80);-moz-opacity:0.6;opacity:0.6;z-index:1212;}*/
@@ -51,8 +51,8 @@ a:hover{color:#8F4116;}
 .FBDelBtn{background-image:url(../images/main/draftDelBtn.gif);}
 
 .ctlPanelMenu{position:absolute;z-index:1204;top:-60px;left:50%;margin-left:-400px;width:800px;height:50px;text-align:center;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:3px solid #939393;border-top:none;}
-.ctlPanel{position:absolute;z-index:1204;width:800px;height:450px;display:none;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:3px solid #939393;}
-.about{position:absolute;z-index:1985;width:400px;height:350px;display:none;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:3px solid #939393;}
+.ctlPanel{position:absolute;z-index:1204;width:800px;height:450px;display:;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:3px solid #939393;}
+.about{position:absolute;z-index:1985;text-align:center;color:#ffffff;width:400px;height:350px;display:none;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:3px solid #939393;}
 
 /** SCV **/
 .SCV{display:none;z-index:1204;position:absolute;right:50px; top:50px;width:150px;height:400px;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:2px solid #BBBBBB;}

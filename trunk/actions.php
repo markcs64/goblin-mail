@@ -110,10 +110,12 @@ switch(strtoupper($action))
 		//test
 		$mail->IsSMTP();
 		$mail->SMTPAuth   = true;
-		$mail->Host       = "smtp.126.com";
-		$mail->Username   = "mail_goblin@126.com ";
+		$mail->Host       = "smtp.gmail.com";
+		$mail->SMTPSecure = "ssl";
+		$mail->Port = 465;
+		$mail->Username   = "aliued.goblin@gmail.com";
 		$mail->Password   = "hello1234";
-		$mail->From       = "mail_goblin@126.com ";
+		$mail->From       = "aliued.goblin@gmail.com";
 		$mail->FromName   = "ALiUED - Goblin*darkSnow";
 		$mail->Subject    = "=?UTF-8?B?" . base64_encode("D6W TEST MAIL - from Goblin v1.0α") . "?=";
 		$mail->WordWrap   = 10;
@@ -126,15 +128,14 @@ switch(strtoupper($action))
 			$mail->AddAddress($mailTo);
 		}
 		$mail->IsHTML(true);
-		$mail->Send();
-		echo "邮件发送成功 -> ".$_REQUEST['mailTo'];
-		/*
+		//$mail->Send();
+
 		if(!$mail->Send()) {
 		  echo "Mailer Error: " . $mail->ErrorInfo;
 		} else {
-		  echo "Message sent!";
+		  echo "邮件发送成功 -> ".$_REQUEST['mailTo'];
 		}
-		*/
+
 		unset($mail);
 		break;
 				

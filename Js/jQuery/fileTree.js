@@ -1,35 +1,50 @@
-$.fn.toBeFileTree = function(iConfig, selectCall,collapseCall) {
+$.fn.toBeFileTree = function(myConfig, selectCall,collapseCall) {
 			// Defaults
-			var self = this.get(0);
-			var o = self.config = $.extend({
-					name : "toBeFileTree",
+			var DOM = this.get(0);if(eval("typeof("+DOM.id+")") == "undefined"){eval(DOM.id + " = DOM;");}//DOMID -> 全局
+			var $SELF = this;
+			var config = DOM.config = $.extend({
+					name : "fileTree",
 					root : "/",
-			    script : 'jqueryFileTree.php',
+			    script : 'fileTree.php',
 			    folderEvent : "click",
 			    expandSpeed : 750,
 			    collapseSpeed : 750,
-			    expandEasing : null,
-			    collapseEasing : null,
+			    expandEasing : 'easeOutBounce',
+			    collapseEasing : 'easeOutBounce',
 			    multiFolder : true,
-			    loadMessage : "** ... Loading ... **"
-			    //allowExt : ">>|js|html|htm|css|<<" //">>|js|html|css|<<" ** darksnow ext allow **
-		  },iConfig);
+			    loadMessage : "** ... Loading ... **",
+			    allowExt : ">>|js|html|htm|css|<<" //">>|js|html|css|<<" ** darksnow ext allow **
+		  },myConfig);
 		  
 		  
 			$(this).each( function() {
 				function showTree(c, t) {
+					$.ajax({
+					  type: "GET",
+					  cache: false,
+					  url: config.script,
+					  dataType: "json",
+					 	data: "action=fileTree&filePath=Files/&allowExt="+config.allowExt,
+					  success: function(json){
+					  	 alert(json);
+					  }
+					})
+					
+					/*
 					var listItem = $(c).find('span');
 					listItem.addClass('wait');
 					$(".jqueryFileTree.start").remove();
 					
-					$.post(o.script, { filePath: t , allowExt : o.allowExt || "" }, function(data) {
+					$.post(config.script, { filePath: t , allowExt : config.allowExt || "" }, function(data) {
 						$(c).find('.start').html('');
 						listItem.removeClass('wait');
 						$(c).append(data);
-						//初始化时候可以不用动画 -> if( o.root == t ) $(c).find('UL:hidden').show(); else $(c).find('UL:hidden').slideDown({ duration: o.expandSpeed, easing: o.expandEasing });
-						$(c).find('UL:hidden').slideDown({ duration: o.expandSpeed, easing: o.expandEasing });
+						//初始化时候可以不用动画 -> if( config.root == t ) $(c).find('UL:hidden').show(); else $(c).find('UL:hidden').slideDown({ duration: config.expandSpeed, easing: config.expandEasing });
+						$(c).find('UL:hidden').slideDown({ duration: config.expandSpeed, easing: config.expandEasing });
 						bindTree(c);
 					});
+					*/
+					
 				}
 				function bindTree(t) {
 					$(t).find('LI[@class*="imFile"]').hover(
@@ -41,12 +56,12 @@ $.fn.toBeFileTree = function(iConfig, selectCall,collapseCall) {
 						}
 					)
 					
-					$(t).find('LI').bind(o.folderEvent, function() {
+					$(t).find('LI').bind(config.folderEvent, function() {
 						var listItem = $(this).find('span');
 						if( $(this).hasClass('imDir') ) {
 							if( $(this).hasClass('collapsed') ) {
-								if( !o.multiFolder ) {
-									$(this).parent().find('UL').slideUp({ duration: o.collapseSpeed, easing: o.collapseEasing });
+								if( !config.multiFolder ) {
+									$(this).parent().find('UL').slideUp({ duration: config.collapseSpeed, easing: config.collapseEasing });
 									$(this).parent().find('LI.imDir').find('span').removeClass('expanded').addClass('collapsed');
 								}
 								$(this).find('UL').remove();
@@ -56,7 +71,7 @@ $.fn.toBeFileTree = function(iConfig, selectCall,collapseCall) {
 							} else {
 								// Collapse
 								collapseCall($(this));
-								$(this).find('UL').slideUp({ duration: o.collapseSpeed, easing: o.collapseEasing });
+								$(this).find('UL').slideUp({ duration: config.collapseSpeed, easing: config.collapseEasing });
 								$(this).addClass('collapsed');
 								listItem.removeClass("expanded");
 							}
@@ -65,16 +80,16 @@ $.fn.toBeFileTree = function(iConfig, selectCall,collapseCall) {
 						}
 						return false;
 					});
-					if( o.folderEvent.toLowerCase != 'click' ) $(t).find('LI A').bind('click', function() { return false; });
+					if( config.folderEvent.toLowerCase != 'click' ) $(t).find('LI A').bind('click', function() { return false; });
 				}
 				
 				//公开函数
-				self.reloadTree = function(){
-					$(this).html('<ul class="jqueryFileTree start"><li><span class="item wait">' + o.loadMessage + '</span><li></ul>');
-					showTree( $(this), escape(o.root) );
+				DOM.reloadTree = function(){
+					$(this).html('<ul class="jqueryFileTree start"><li><span class="item wait">' + config.loadMessage + '</span><li></ul>');
+					showTree( $(this), escape(config.root) );
 				}
 				
-				self.reloadTree();
+				DOM.reloadTree();
 			});
 }
 

@@ -1,0 +1,9 @@
+folders:{
+'Files/Archive':{name:'Archive'},
+'Files/Drafts':{name:'Drafts'},
+'Files/Templates':{name:'Templates'}
+},
+files:{'Files/test.html':{name:'test.html',size:0.0kb,ext:'html',mTime:'2009-01-15 10:59:50'},
+'Files/บร!!~!!.html':{name:'บร!!~!!.html',size:0.0kb,ext:'html',mTime:'2009-01-15 10:59:50'}
+},
+fromCache:true

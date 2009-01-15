@@ -182,6 +182,27 @@ $.fn.toBeEditor = function(myConfig) {
 		oFCKeditor.Config['FullPage'] = config.fullPage;
 		oFCKeditor.Height = config.height;
 		oFCKeditor.Width = config.width;
+		
+		/*
+		FCKConfig.Config['EditorAreaCSS'] = FCKConfig.BasePath + 'css/fck_editorarea.css'; // 编辑区的样式表文件
+		FCKConfig.Config['EditorAreaStyles'] = '' ; // 编辑区的样式表风格
+		FCKConfig.Config['ToolbarComboPreviewCSS'] =''; //工具栏预览CSS
+		oFCKeditor.Config['ProcessHTMLEntities'] = false ; //处理HTML实体
+		*/
+		//oFCKeditor.Config['DocType'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+		oFCKeditor.Config['EnableXHTML'] = false;
+		oFCKeditor.Config['FillEmptyBlocks'] = false;
+		oFCKeditor.Config['EnableSourceXHTML'] = false;
+		oFCKeditor.Config['ImageBrowser'] = false;  
+		/*
+		oFCKeditor.Config['EnableSourceXHTML'] = false;
+		oFCKeditor.Config['EnableXHTML'] = false;
+		oFCKeditor.Config['FillEmptyBlocks'] = false; //是否填充空块
+		oFCKeditor.Config['FormatSource']  = false; //在切换到代码视图时是否自动格式化代码
+		oFCKeditor.Config['FormatOutput']  = false; 
+		//oFCKeditor.FormatIndentator = '    ' ;
+*/
+
 		oFCKeditor.ReplaceTextarea();
 	
 		//索引标记住此编辑器  为了不耗资源  只用id 而不是把整个obj赋过去
@@ -278,7 +299,13 @@ $.fn.toBeFileBrowser = function(myConfig) {
 			})
 			
 			//初始文件浏览器
-			$(config.fileList).toBeFileTree({root: config.root, script: "actions.php?action=fileTree", expandEasing: "easeOutBounce", collapseEasing: "easeOutBounce" },
+			$(config.fileList).toBeFileTree({
+				root: config.root,
+				script: "actions.php",
+				expandEasing: "easeOutCubic",
+				collapseEasing: "easeOutCubic",
+				allowExt : ">>|js|html|htm|css|<<"
+			 },
 				 //文件点击时执行
 				 function(item){
 				 	//当前选中判断return
@@ -444,19 +471,6 @@ $.fn.toBeFileBrowser = function(myConfig) {
 
 }
 
-
-//=[ 功能 : 自动定义无href链接 ]=------------------------------------------------->>>
-//=[ PS: 没有href加上js空方式  使其也能使用css中hover方式 ]
-$.fn.defineEmptyLinks = function(){
-	$(this).each(function(){
-			if(!$(this).attr("href")){
-					$(this).attr({href:"javascript:void(0);"});
-				}
-	});
-	if($.browser.msie)CollectGarbage();
-}
-
-
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //=[ history 支援 ]=---------------------------->>>
 $.fn.toBeHistoryBody = function(myConfig) {
@@ -478,6 +492,59 @@ $.fn.toBeHistoryBody = function(myConfig) {
 		//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 		$.historyInit(DOM.run);
 
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//=[ 其它工具扩展 ]=---------------------------->>>
+//=[ 功能 : 自动定义无href链接 ]=------------------------------------------------->>>
+//=[ PS: 没有href加上js空方式  使其也能使用css中hover方式 ]
+$.fn.defineEmptyLinks = function(){
+	$(this).each(function(){
+			if(!$(this).attr("href")){
+					$(this).attr({href:"javascript:void(0);"});
+				}
+	});
+	if($.browser.msie)CollectGarbage();
+}
+
+//=[ 功能 : 居中 动画 ]=------------------------------------------------->>>
+$.fn.toScreenCenter = function(myConfig) { 
+				if(this.get(0).style.display == "none")return;
+				var DOM = this.get(0);if(eval("typeof("+DOM.id+")") == "undefined"){eval(DOM.id + " = DOM;");}//DOMID -> 全局
+				var $SELF = this;
+				var config = DOM.config = $.extend({
+					x : 0,
+					y : 0
+				},myConfig);
+
+        if(!DOM.loaded) { 
+        				DOM.loaded = true;
+                $SELF.css('top', ($(window).height()/2-this.height()/2)+config.y); 
+                $SELF.css('left', ($(window).width()/2-this.width()/2)+config.x);
+                $(window).resize(function() { $SELF.toScreenCenter(config.x,config.y); }); 
+        } else {
+                $SELF.stop(); 
+                $SELF.animate({ top: ($(window).height()/2-this.height()/2)+config.y, left: ($ (window).width()/2-this.width()/2)+config.x}, 600, 'easeInBack'); 
+        }
+} 
+//=[ 功能 : Date prototype 扩展 时间格式化 ]=------------------------------------------------->>>
+//PS.new Date().format("yyyy.M.d mm分ss秒")
+Date.prototype.format = function(format)
+{
+	var o = {
+	"M+" : this.getMonth()+1, //month
+	"d+" : this.getDate(),    //day
+	"h+" : this.getHours(),   //hour
+	"m+" : this.getMinutes(), //minute
+	"s+" : this.getSeconds(), //second
+	"q+" : Math.floor((this.getMonth()+3)/3),  //quarter
+	"S" : this.getMilliseconds() //millisecond
+	}
+	if(/(y+)/.test(format))
+	format = format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
+	for(var k in o)if(new RegExp("("+ k +")").test(format))
+	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] :("00"+ o[k]).substr((""+ o[k]).length));
+	return format;
 }
 
 
@@ -503,95 +570,23 @@ function FCKeditor_OnComplete(editorInstance){
 	var editorToolBar = editorInstance.EditorWindow.parent.document.getElementById("xToolbar");
 		$(editorToolBar).bind("dblclick", function(){
 		editorInstance.ToolbarSet.Collapse();
-		});
-	//alert(editorInstance.EditorDocument.getElementsByTagName("a"));
-	//var e=editorInstance.EditorDocument.createElement('Span');
-	//editorInstance.InsertElement(e); 
-	//alert(editorInstance.EditorWindow.parent.document.getElementById("xToolbar"));
-	//var f = $(editorInstance.EditorDocument)
-	//f.hide();
+	});
+
 	var body = $(editorInstance.EditorDocument.body);
 	var spans = body.find("#noDesign");
 	var inputfc = body.find("#fc");
-	//alert(spans);
-	//spans.css({"background-color":"#fff"});
-	//spans.attr({"contentEditable":"false"});
 
-	
-	//var mask = $('<div style="width:150px;height:50px;positon:absolute;background:#333;z-index:999;margin-top:-30px;"></div>')
-	//spans.append('<div style="width:150px;height:50px;positon:absolute;background:#333;z-index:999;margin-top:-30px;"></div>');
+	//非编辑区域跳开~
 	spans[0].contentEditable = false; 
 	spans[0].designMode = "Off"; 
 	spans[0].unselectable = true; 
-	//spans.attr({"designMode","Off"});
-	//spans.attr({"contentEditable":false,"designMode","Off"});
-	/*
-	spans[0].contentEditable = false;
-	spans[0].unselectable = true;
-	spans[0].designMode = "Off"; 
-	*/
-	/*
-	spans.bind("mouseover",function(e){
-		//$(this).css({"background-color":"#333"});
-		editorInstance.EditorWindow.parent.document.body.focus();
-		//alert("");
-	})
-	
-	spans.bind("mouseup",function(e){
-		//$(this).css({"background-color":"#333"});
-		editorInstance.EditorWindow.parent.document.body.focus();
-		//alert("");
-	})
-	spans.bind("mousedown",function(e){
-		//$(this).css({"background-color":"#333"});
-		
-		editorInstance.EditorWindow.parent.document.body.focus();
-		//alert("");
-	})
-	*/
-	/*
 	spans.bind("mousemove",function(e){
-		//$(this).css({"background-color":"#333"});
-		
 		editorInstance.EditorWindow.parent.document.body.focus();
-		//alert("");
 	})
-	*/
-	/*
-	spans.bind("click",function(e){
-		//editorInstance.EditorWindow.parent.document.body.focus();
-		//setTimeout(function(){inputfc.focus();},100);
-		//alert(this.id);
-		editorInstance.EditorDocument.body.contentEditable = true;
-		this.contentEditable = false;
-		this.designMode = "Off"; 
-	})
-	
-	*/
 	
 	if($.browser.msie)CollectGarbage();
-	
 
 }
-// Date扩展 时间格式化  PS.new Date().format("yyyy.M.d mm分ss秒")
-Date.prototype.format = function(format)
-{
-	var o = {
-	"M+" : this.getMonth()+1, //month
-	"d+" : this.getDate(),    //day
-	"h+" : this.getHours(),   //hour
-	"m+" : this.getMinutes(), //minute
-	"s+" : this.getSeconds(), //second
-	"q+" : Math.floor((this.getMonth()+3)/3),  //quarter
-	"S" : this.getMilliseconds() //millisecond
-	}
-	if(/(y+)/.test(format))
-	format = format.replace(RegExp.$1,(this.getFullYear()+"").substr(4 - RegExp.$1.length));
-	for(var k in o)if(new RegExp("("+ k +")").test(format))
-	format = format.replace(RegExp.$1,RegExp.$1.length==1 ? o[k] :("00"+ o[k]).substr((""+ o[k]).length));
-	return format;
-}
-
 
 
 
@@ -652,7 +647,7 @@ $(function(){
 		
 		// 按钮事件捆绑
 		$("#mailBtn").click(function(){
-			d6wEditor.sendMail({btn:$(this)});
+			//d6wEditor.sendMail({btn:$(this)});
 		})
 		
 		/*
@@ -665,7 +660,6 @@ $(function(){
 			d6wEditor.designLayout();
 		})
 		
-
 		//初始化History控制器
 		$("#historyAPP").toBeHistoryBody();//自动全局化
 		
@@ -755,38 +749,15 @@ $(function(){
 			
 		})
 
-
-
-
-
-
-//居中扩展
-
-
-jQuery.fn.centerScreen = function(x,y,loaded) { 
-				if(this[0].style.display == "none")return;
-        var obj = this; 
-        if(!loaded) { 
-                obj.css('top', ($(window).height()/2-this.height()/2)+y); 
-                obj.css('left', ($(window).width()/2-this.width()/2)+x); 
-                $(window).resize(function() { obj.centerScreen(x,y,!loaded); }); 
-        } else {
-                obj.stop(); 
-                obj.animate({ top: ($(window).height()/2-this.height()/2)+y, left: ($ (window).width()/2-this.width()/2)+x}, 600, 'easeInBack'); 
-        }
-} 
-        
-		//$("#shadow").show();
 		
-		$("#ctlPanel").centerScreen(0,0);
-		//$("#ctlPanel").css({"display":"block"})
-		
-		
+		$("#ctlPanel").toScreenCenter({x:0,y:0});
 
+		
+/*
 		setTimeout(function(){
 			 $("#ctlPanelMenu").animate({ top: 0}, 1000, 'easeOutCubic'); 
 			},5000)
-		
+*/		
 		
 		$("#manageEmAddressBtn").click(function(){
 			$("#manageEmAddress").slideToggle(300);
@@ -795,7 +766,7 @@ jQuery.fn.centerScreen = function(x,y,loaded) {
 		
 		 
 		 $("#copyRight").toggle(function(){
-			 	$("#about").centerScreen(0,0);
+			 	$("#about").toScreenCenter();
 			 	$("#about").fadeIn(500);
 			 	$("#shadowSWF").show();
 			 	$("#shadow").show();

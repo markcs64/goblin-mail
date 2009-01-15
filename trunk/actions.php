@@ -1,4 +1,6 @@
 <?php
+echo "121212";
+exit();
 //控制返回器
 if(!isset($_REQUEST["action"]))exit();/* action必需 结尾/必需 */
 $action = $_REQUEST["action"];

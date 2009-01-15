@@ -24,9 +24,9 @@ $.fn.toBeFileTree = function(myConfig, selectCall,collapseCall) {
 					  cache: false,
 					  url: config.script,
 					  dataType: "json",
-					 	data: "action=fileTree&filePath=Files/&allowExt="+config.allowExt,
+					 	data: {action:"NEWFILETREE",path:"Files/Templates/",allowExt:config.allowExt},
 					  success: function(json){
-					  	 alert(json);
+					  	 DOM.innerHTML = json;
 					  }
 					})
 					

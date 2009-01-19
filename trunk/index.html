@@ -16,7 +16,12 @@
 	
 	<!-- {{{{ 模板箱 -->
 	<div id="templatesBox" class="FBBox">
-		<div id="templatesList" class="FBList"></div>
+		<div id="templatesList" class="FBList">
+			<ul class="fileTree" model="true">
+				<li class="imFolder collapsed" title="*path*" path="*path*" pathForScript="*pathForScript*"><span class="item directory">*name*</span></li>
+				<li class="imFile" title="P : *path* S : *size* T : *mTime*" path="*path*" pathForScript="*pathForScript*"><span class="item file ext_*ext*">*name*</span></li>
+			</ul>
+		</div>
 		<div id="templateShowRoom" class="FBShowRoom">
 			<iframe class="FBIframe"></iframe>
 		</div>
@@ -27,7 +32,12 @@
 	
 	<!-- {{{{ 草稿箱 -->
 	<div id="draftsBox" class="FBBox">
-		<div id="draftsList" class="FBList"></div>
+		<div id="draftsList" class="FBList">
+			<ul class="fileTree" model="true">
+				<li class="imFolder collapsed" title="*path*" path="*path*" pathForScript="*pathForScript*"><span class="item directory">*name*</span></li>
+				<li class="imFile" title="P : *path* S : *size* T : *mTime*" path="*path*" pathForScript="*pathForScript*"><span class="item file ext_*ext*">*name*</span></li>
+			</ul>
+		</div>
 		<div id="draftShowRoom" class="FBShowRoom">
 			<iframe class="FBIframe"></iframe>
 		</div>
@@ -74,7 +84,7 @@
 	</div>
 	
 	<div id="about" class="about">
-		羊死喽~
+		<div style="margin-top:150px;">今年杭州没下雪 ...</div>
 	</div>
 	
 	<ul id="SCV" class="SCV" style="ndisplay:block;">

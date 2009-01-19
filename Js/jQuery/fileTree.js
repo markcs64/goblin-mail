@@ -16,38 +16,58 @@ $.fn.toBeFileTree = function(myConfig, selectCall,collapseCall) {
 			    allowExt : ">>|js|html|htm|css|<<" //">>|js|html|css|<<" ** darksnow ext allow **
 		  },myConfig);
 		  
-		  
-			$(this).each( function() {
-				function showTree(c, t) {
+			DOM.showTree = function(target, path) {
 					$.ajax({
-					  type: "GET",
+					  type: "POST",
 					  cache: false,
 					  url: config.script,
 					  dataType: "json",
-					 	data: {action:"NEWFILETREE",path:"Files/Templates/",allowExt:config.allowExt},
+					  cache:true,
+					 	data: {action:"NEWFILETREE",path:path,allowExt:config.allowExt},
 					  success: function(json){
-					  	 DOM.innerHTML = json;
+					  		$(target).find('ul[@model!="true"]').remove();
+					  		
+							  //for folders
+							  var foldersHTML = "";
+							  $.each(json.folders, function(key, jdata){
+									var liHTML = DOM.folderLiHTML;
+									$.each(jdata,function(jname,jvalue){
+										liHTML = liHTML.replace(eval("/\\*"+jname+"\\*/ig"),jvalue);
+										liHTML = liHTML.replace(eval("/\\*path\\*/ig"),key);
+									})
+									foldersHTML += liHTML;liHTML=null;
+							  });
+							  
+							  //for files
+							  var filesHTML = "";
+							  $.each(json.files, function(key, jdata){
+									var liHTML = DOM.fileLiHTML;
+									$.each(jdata,function(jname,jvalue){
+										liHTML = liHTML.replace(eval("/\\*"+jname+"\\*/ig"),jvalue);
+										liHTML = liHTML.replace(eval("/\\*path\\*/ig"),key);
+									})
+									filesHTML += liHTML;liHTML=null;
+							  });
+								
+								
+								var lastHTML = foldersHTML + filesHTML;foldersHTML=null;filesHTML=null;
+								var newUlItem = DOM.ulModel.clone().removeAttr("model");
+								newUlHTML = newUlItem.html(lastHTML).outer();lastHTML=null;
+								target.innerHTML += newUlHTML;newUlHTML=null;
+								
+								$(target).find('ul[@model!="true"]').slideDown({ duration: config.expandSpeed, easing: config.expandEasing });
+								
+								DOM.bindTree(target);
+								var itemIco = $(target).find('[class*="item"]');
+								itemIco.removeClass('wait');itemIco = null;
+								
+								if ($.browser.msie) CollectGarbage();
 					  }
 					})
-					
-					/*
-					var listItem = $(c).find('span');
-					listItem.addClass('wait');
-					$(".jqueryFileTree.start").remove();
-					
-					$.post(config.script, { filePath: t , allowExt : config.allowExt || "" }, function(data) {
-						$(c).find('.start').html('');
-						listItem.removeClass('wait');
-						$(c).append(data);
-						//初始化时候可以不用动画 -> if( config.root == t ) $(c).find('UL:hidden').show(); else $(c).find('UL:hidden').slideDown({ duration: config.expandSpeed, easing: config.expandEasing });
-						$(c).find('UL:hidden').slideDown({ duration: config.expandSpeed, easing: config.expandEasing });
-						bindTree(c);
-					});
-					*/
-					
 				}
-				function bindTree(t) {
-					$(t).find('LI[@class*="imFile"]').hover(
+				
+				DOM.bindTree = function(target) {
+					$(target).find('LI[@class*="imFile"]').hover(
 						function(){
 							$(this).addClass("mouseHover");
 						},
@@ -55,19 +75,20 @@ $.fn.toBeFileTree = function(myConfig, selectCall,collapseCall) {
 							$(this).removeClass("mouseHover");
 						}
 					)
-					
-					$(t).find('LI').bind(config.folderEvent, function() {
+					$(target).find('LI').bind(config.folderEvent, function() {
 						var listItem = $(this).find('span');
-						if( $(this).hasClass('imDir') ) {
+						if( $(this).hasClass('imFolder') ) {
 							if( $(this).hasClass('collapsed') ) {
 								if( !config.multiFolder ) {
 									$(this).parent().find('UL').slideUp({ duration: config.collapseSpeed, easing: config.collapseEasing });
-									$(this).parent().find('LI.imDir').find('span').removeClass('expanded').addClass('collapsed');
+									$(this).parent().find('LI.imFolder').find('span').removeClass('expanded').addClass('collapsed');
 								}
 								$(this).find('UL').remove();
-								showTree( $(this), escape($(this).attr('rel').match( /.*\// )) );
+								DOM.showTree( this, escape($(this).attr('pathForScript').match( /.*\// )) );
 								$(this).removeClass('collapsed')//展开标记
 								listItem.addClass("expanded");
+								var itemIco = $(this).find('[class*="item"]');
+								itemIco.addClass('wait');
 							} else {
 								// Collapse
 								collapseCall($(this));
@@ -80,17 +101,20 @@ $.fn.toBeFileTree = function(myConfig, selectCall,collapseCall) {
 						}
 						return false;
 					});
-					if( config.folderEvent.toLowerCase != 'click' ) $(t).find('LI A').bind('click', function() { return false; });
+					if( config.folderEvent.toLowerCase != 'click' ) $(target).find('LI A').bind('click', function() { return false; });
 				}
 				
-				//公开函数
-				DOM.reloadTree = function(){
-					$(this).html('<ul class="jqueryFileTree start"><li><span class="item wait">' + config.loadMessage + '</span><li></ul>');
-					showTree( $(this), escape(config.root) );
+				DOM.reloadTree = function() {
+					DOM.showTree( DOM, escape(config.root) );
 				}
+
+				// set TPLs
+				DOM.ulModel = $SELF.find("ul[@model='true']");DOM.ulModel.hide();
+				DOM.folderLiHTML = DOM.ulModel.find("li[class*='imFolder']").outer();
+				DOM.fileLiHTML = DOM.ulModel.find("li[class*='imFile']").outer();
+
+				DOM.showTree( DOM, escape(config.root) );
 				
-				DOM.reloadTree();
-			});
 }
 
 	

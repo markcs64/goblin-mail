@@ -526,7 +526,13 @@ $.fn.toScreenCenter = function(myConfig) {
                 $SELF.stop(); 
                 $SELF.animate({ top: ($(window).height()/2-this.height()/2)+config.y, left: ($ (window).width()/2-this.width()/2)+config.x}, 600, 'easeInBack'); 
         }
+}
+
+//=[ 功能 : 兼容ff的outerHTML  + 返回时候去除jquery标记.. ]=------------------------------------------------->>>
+jQuery.fn.outer = function() { 
+   return $('<div></div>').append( this.eq(0).clone()).html().replace(eval('/jQuery.*?\"null\"/ig'),'');
 } 
+
 //=[ 功能 : Date prototype 扩展 时间格式化 ]=------------------------------------------------->>>
 //PS.new Date().format("yyyy.M.d mm分ss秒")
 Date.prototype.format = function(format)
@@ -638,6 +644,7 @@ $(function(){
 				showRoom : "#draftShowRoom",
 				demoIframeId : "draftDemoIframe",
 				linkEditor	:	"#d6wEditor",
+				onOffBtn : "#draftsBoxBtn",
 				closeBtn : "#draftsBoxCloseBtn",
 				reloadFileListBtn : "#draftsBoxReloadBtn",
 				shadow : "#shadow"

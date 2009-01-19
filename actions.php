@@ -31,7 +31,7 @@ switch(strtoupper($action))
 					if( file_exists($_POST['filePath'] . $file) && $file != '.' && $file != '..' && !is_dir($_POST['filePath'] . $file) ) {
 						$ext = preg_replace('/^.*\./', '', $file);
 						//** darksnow ext allow **
-						if(empty($_POST['allowExt']) || strrpos($_POST['allowExt'],"|".$ext."|") > 0){
+						if(empty($_POST['allowExt']) || strrpos(strtolower($_POST['allowExt']),"|".strtolower($ext)."|") > 0){
 								$fileSize = fileSize($_POST['filePath'] . $file) / 1024;
 								//取小数点1位
 								$fileSize = number_format($fileSize,1,".","");
@@ -52,10 +52,10 @@ switch(strtoupper($action))
 		$jsonFolderPart = "";
 		$jsonFilesPart = "";
 		
-		$path = $_REQUEST['path'];
+		$path = urldecode($_REQUEST['path']);
+		
 		if( file_exists($path) ) {
 			$files = scandir($path);
-			
 			//是否从缓存获取
 			$cachePath = $path."cache.d6w";
 			if(file_exists($cachePath) && (filemTime($cachePath) >= filemTime($path.".")) ){
@@ -73,14 +73,14 @@ switch(strtoupper($action))
 					//目录
 					if(is_dir($filePath)){
 						if($file != ".svn"){
-								$jsonFolderPart .= "'$filePath':{name:'$file'},\n";
+								$jsonFolderPart .= "'$filePath/':{name:'$file',pathForScript:'".htmlentities($filePath)."/'},\n";
 						}
 					}else{
-						$ext = end(explode(".",$file));
-						if(empty($_POST['allowExt']) || strrpos($_POST['allowExt'],"|".$ext."|") > 0){
+						$ext = strtolower(end(explode(".",$file)));
+						if(empty($_POST['allowExt']) || strrpos(strtolower($_POST['allowExt']),"|".$ext."|") > 0){
 							$fileSize = number_format(fileSize($path.$file) / 1024,1,".","") . "kb";
 							$modifyTime = date("Y-m-d H:i:s",filemTime($path.$file));
-							$jsonFilesPart .= "'$filePath':{name:'$file',size:'$fileSize',ext:'$ext',mTime:'$modifyTime'},\n";
+							$jsonFilesPart .= "'$filePath':{name:'$file',size:'$fileSize',ext:'$ext',mTime:'$modifyTime',pathForScript:'".htmlentities($filePath)."'},\n";
 						}
 					}
 				}

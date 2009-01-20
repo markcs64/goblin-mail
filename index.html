@@ -17,9 +17,10 @@
 	<!-- {{{{ 模板箱 -->
 	<div id="templatesBox" class="FBBox">
 		<div id="templatesList" class="FBList">
-			<ul class="fileTree" model="true">
+			<ul class="fileTree" model="true" style="display:block;">
 				<li class="imFolder collapsed" title="*path*" path="*path*" pathForScript="*pathForScript*"><span class="item directory">*name*</span></li>
 				<li class="imFile" title="P : *path* S : *size* T : *mTime*" path="*path*" pathForScript="*pathForScript*"><span class="item file ext_*ext*">*name*</span></li>
+				<li class="imSelected"></li>
 			</ul>
 		</div>
 		<div id="templateShowRoom" class="FBShowRoom">
@@ -47,6 +48,7 @@
 	<!-- }}}} 草稿箱 -->
 
 	
+	<!-- {{{{ 大致的控制面板 -->
 	<div id="ctlPanelMenu" class="ctlPanelMenu">
 		...
 	</div>
@@ -82,12 +84,11 @@
 		</div>
 		
 	</div>
+	<!-- }}}} 大致的控制面板 -->
 	
-	<div id="about" class="about">
-		<div style="margin-top:150px;">今年杭州没下雪 ...</div>
-		<div>SVN:https://goblin-mail.googlecode.com/svn/trunk/</div>
-	</div>
 	
+
+	<!-- {{{{ 资源采集器 -->
 	<ul id="SCV" class="SCV" style="ndisplay:block;">
 			<li id="scvHandle" class="scvHandle"></li>
 			<li class="scvBox" contentEditable=true >^_^</li>
@@ -109,7 +110,8 @@
 				<span id="test">插入到编辑器</span>
 			</li>
 	</ul>
-
+	<!-- }}}} 资源采集器 -->
+	
 	<!-- {{{{ 编辑器 -->
 	<textarea id="d6wEditor" name="edmEditor" style="display:none;">
 		<style>
@@ -135,20 +137,27 @@
 
 	<!-- {{{{ Mail板块 -->
 	<div id="mailPanel" class="mailPanel">
-		
+		setup.....
 	</div>
 
 	<!-- }}}} Mail板块 -->
 
+	<!-- {{{{ 关于 -->
+	<div id="shadowSWF" style="display:none;top:0px;left:0px;position:absolute; z-index:38; overflow:hidden;"></div>
+	<div id="about" class="about">
+		<div style="margin-top:150px;">今年貌似没看到杭州下雪 ...</div>
+		<div>此效果是测试你机子性能的一种方式...如果你觉得你的机器够牛的话....</div>
+		<div>我Chobits的配置:PM-1.6G DDR-1G ATi9600-64M</div>
+		<div>SVN:https://goblin-mail.googlecode.com/svn/trunk/</div>
+	</div>
+	
 	<div id="copyRight" title="关于我们...">
 		<!-- Happiness only real when shared <br /> -->
 		AliUED EDM Goblin v1.2α <br />
 		LoadingTime : <span id="jsRunTime"></span>ms
 	</div>
-	<div id="shadowSWF" style="display:none;top:0px;left:0px;position:absolute; z-index:38; overflow:hidden;"></div>
-
-
-
+	<!-- }}}} 关于 -->
+	
 	<script type="text/javascript" src="JS/jQuery/jQuery.min.js"></script>
 	<!--<script type="text/javascript" src="JS/jQuery/Ui/Ui.js"></script>-->
 	<!-- {{{{ wait JsBuild -->

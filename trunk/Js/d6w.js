@@ -653,8 +653,15 @@ $(function(){
 		
 		
 		// 按钮事件捆绑
-		$("#mailBtn").click(function(){
+		$("#mailBtn").toggle(
+		function(){
 			//d6wEditor.sendMail({btn:$(this)});
+			$("#mailPanel").animate({ bottom: 0}, 1000, 'easeOutCubic');
+			$("#shadow").show();
+		},
+		function(){
+			$("#mailPanel").animate({ bottom: -150}, 1000, 'easeOutCubic');
+			$("#shadow").hide();
 		})
 		
 		/*
@@ -764,7 +771,10 @@ $(function(){
 		setTimeout(function(){
 			 $("#ctlPanelMenu").animate({ top: 0}, 1000, 'easeOutCubic'); 
 			},5000)
-*/		
+*/
+
+
+
 		
 		$("#manageEmAddressBtn").click(function(){
 			$("#manageEmAddress").slideToggle(300);

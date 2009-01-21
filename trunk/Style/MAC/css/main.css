@@ -61,7 +61,7 @@ a:hover{color:#8F4116;}
 
 
 
-.mailPanel{position:absolute;z-index:1117;bottom:-150px;left:50%;margin-left:-400px;margin-bottom:6px;width:800px;height:150px;text-align:center;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:3px solid #939393;border-bottom:none;}
+.mailPanel{position:absolute;z-index:1117;bottom:-150px;left:50%;margin-left:-400px;margin-bottom:6px;width:800px;height:150px;padding:3px 5px;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:3px solid #939393;border-bottom:none;}
 
 
 /** for jQfileTree PS.gifsor属性特殊处理 **/

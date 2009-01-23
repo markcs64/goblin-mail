@@ -444,3 +444,7 @@ UI再度制作
 	
 	增加jQuery.fn.outer 形成兼容ff和ie的简易模板系统    星雪花标签终于重出江湖
 	
+	
+23:13 2009-1-22
+	参考http://0318ds.cn/omg/viewthread.php?tid=3155 风格   光晕...
+	

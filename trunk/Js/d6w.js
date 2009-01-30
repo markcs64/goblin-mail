@@ -23,26 +23,11 @@ $.I = {
 	},
 	Data : {
 		Name		:	"Goblin",
-		Targets		:	"",
-		Format		:	""
-	},
-	HtmlTime		:	function(Data){
-		if(Data) {
-			$.extend(this.Data,Data);
-		}
-		var Now = new Date();
-		X.JsEndTime = Now.getTime();
-		var T = X.JsEndTime - X.JsStartTime;
-		if(!this.Data.Targets){
-			return T;
-		}else{
-			$(this.Data.Targets).html(T);
-		}
+		Coder		: "DarkSnow"
 	},
 	Titles : { 
 		main : "GoBlin 2009 ^ DarkSnow"
 	}
-	
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -85,12 +70,16 @@ $.fn.toBeEditor = function(myConfig) {
 			return editor.GetHTML();
 		}
 		//** 赋值 **/
-		DOM.setEditorData = function(content){
+		DOM.setEditorData = function(content,pathInfo){
 				try{
 					var editor = FCKeditorAPI.GetInstance(DOM.id);
 					if(editor.EditMode == FCK_EDITMODE_SOURCE)editor.EditMode = FCK_EDITMODE_WYSIWYG;
 					editor.SetData(content);
 					DOM.expandToolBar();
+					if(pathInfo){
+						DOM.nowEditFilePath = pathInfo;
+					  DOM.nowEditFileName = pathInfo.substring(pathInfo.lastIndexOf('/') + 1).split('.')[0];
+					}
 				}catch(e){
 					DOM.innerText = content;
 				}
@@ -100,7 +89,7 @@ $.fn.toBeEditor = function(myConfig) {
 		//从目标路径读取数据赋值
 		DOM.setEditorDataFromFile = function(path){
 			$.post(config.script, { action : "READFILE" , filePath : path }, function(data) {
-				DOM.setEditorData(data);
+				DOM.setEditorData(data,path);
 			});
 		}
 		
@@ -108,32 +97,6 @@ $.fn.toBeEditor = function(myConfig) {
 			FCKeditorAPI.GetInstance(DOM.id).InsertHtml(content);
 		}
 
-		//将内容发送邮件 + config.... 暂时默认
-		DOM.sendMail = function(config){
-				var html = DOM.GetHTML();
-				$.ajax({
-					url: 'actions.php', 
-					type: 'POST', 
-					data:{mailTo:DOM.config.mailTo,action:"SENDMAIL",content:html}, 
-					dataType: 'html', 
-					timeout: -1, 
-					error: function(){
-						alert('Error loading PHP document');
-						try{config.btn.loadingIco.hide(500);}catch(e){};
-					}, 
-					success: function(result){
-						alert(result);
-						try{config.btn.loadingIco.hide(500);}catch(e){};
-					} 
-				});
-				
-				try{
-					//loading图标
-					config.btn.loadingIco = $('<span class="loading"></span>');
-					$(config.btn).append(config.btn.loadingIco);
-				}catch(e){}
-		}
-		
 		// 转换为设计布局模式
 		DOM.designLayout = function(){
 			var editor = FCKeditorAPI.GetInstance(DOM.id);
@@ -271,10 +234,10 @@ $.fn.toBeFileBrowser = function(myConfig) {
 						var path = nowItem.attr("path");
 						var linkEditor = $(config.linkEditor).get(0);
 						$.post(config.script, { action : "READFILE" , filePath : path }, function(data) {
-							linkEditor.setEditorData(data);
+							linkEditor.setEditorData(data,path);
 							//去除草稿面板&载入icon
 							nowItem.find("div[class*='currentLoading']").hide(1500);
-							DOM.hideIt();
+							DOM.hideSelf();
 							historyAPP.makeUrl(linkEditor,"setEditorDataFromFile('"+path+"')");
 							document.title = "正在编辑 : " + path;
 						});
@@ -302,8 +265,8 @@ $.fn.toBeFileBrowser = function(myConfig) {
 			$(config.fileList).toBeFileTree({
 				root: config.root,
 				script: "actions.php",
-				expandEasing: "easeOutCubic",
-				collapseEasing: "easeOutCubic",
+				expandEasing: "easeOutBounce",
+				collapseEasing: "easeOutBounce",
 				allowExt : ">>|js|html|htm|css|<<"
 			 },
 				 //文件点击时执行
@@ -359,11 +322,11 @@ $.fn.toBeFileBrowser = function(myConfig) {
 		}
 		//** 显示BOX **
 		//=================================================================================================================================
-		DOM.showIt = function(delay){
+		DOM.showSelf = function(delay){
 				if($.TEMP.lastOpenPanel){
 					var lastOpen = $.TEMP.lastOpenPanel.get(0);
 					$(lastOpen.config.onOffBtn).removeClass("underLine");
-					lastOpen.hideIt(0);
+					lastOpen.hideSelf(0);
 				}
 				$.TEMP.lastOpenPanel = $SELF;
 				if(DOM.alreadyShow)return;
@@ -381,12 +344,12 @@ $.fn.toBeFileBrowser = function(myConfig) {
 					DOM.style.display = "block";
 				}
 				DOM.alreadyShow = true;
-				//$.iHistory.makeUrl(self,"showIt()");
+				//$.iHistory.makeUrl(self,"showSelf()");
 				if($.browser.msie)CollectGarbage();
 		}
 		//** 隐藏BOX **
 		//=================================================================================================================================
-		DOM.hideIt = function(delay){
+		DOM.hideSelf = function(delay){
 				var lastOpen = $.TEMP.lastOpenPanel.get(0);
 				$(lastOpen.config.onOffBtn).removeClass("underLine");
 				if(!DOM.alreadyShow)return;
@@ -401,13 +364,13 @@ $.fn.toBeFileBrowser = function(myConfig) {
 					DOM.style.display = "none";
 					DOM.alreadyShow = false;
 				}
-				//$.iHistory.makeUrl(self,"hideIt()");
+				//$.iHistory.makeUrl(self,"hideSelf()");
 				if($.browser.msie)CollectGarbage();
 		}
 		//** 选取浏览指定 **
 		//=================================================================================================================================
 		DOM.selectFileItem = function(path,fromURL){
-			if(!DOM.alreadyShow){DOM.showIt();}
+			if(!DOM.alreadyShow){DOM.showSelf();}
 			/*
 			if(fromURL){
 					//跨越文件夹怎么办....
@@ -420,6 +383,7 @@ $.fn.toBeFileBrowser = function(myConfig) {
 			//需要的地方 必要的时候制造makeURL留下后路
 			historyAPP.makeUrl(DOM,"selectFileItem('"+path+"','fromURL')");
 			document.title = $.I.Titles.main + DOM.config.title + " - 预览 : " + path;
+			$SELF.find("[class*='titleFileRoot']").html(" <a href='" + path + "' target='_blank'>" + path + "</a>");
 		};
 		
 		DOM.saveDraft = function(config){
@@ -456,14 +420,14 @@ $.fn.toBeFileBrowser = function(myConfig) {
 		//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 		$(config.onOffBtn).click(function(){
 			if(DOM.alreadyShow){
-				DOM.hideIt(500);
+				DOM.hideSelf(500);
 			}else{
-				DOM.showIt(500);
+				DOM.showSelf(500);
 			}
 		});
 
 		$(config.closeBtn).click(function(){
-			DOM.hideIt(500);
+			DOM.hideSelf(500);
 		});
 		
 		//** 默认运行区域 ** PS.这个打算做成没有默认动作触发 通过按钮来触发 不是一出现就秀的那种~...不用默认跑了~~
@@ -494,6 +458,125 @@ $.fn.toBeHistoryBody = function(myConfig) {
 
 }
 
+
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//=[ mail控制面板 ]=------------------------------------------------->>>
+$.fn.toBeMailPanel = function(myConfig) {
+	//** 静默配置定义 **
+	//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+	var DOM = this.get(0);if(eval("typeof("+DOM.id+")") == "undefined"){eval(DOM.id + " = DOM;");}//DOMID -> 全局
+	var $SELF = this;
+	var config = DOM.config = $.extend({
+			title : "D6W Mail Panel",
+			name : "mailPanel",	//方便后续扩展限定名
+			onOffBtn : "#mailBtn",
+			mailTitleClass : "mailTitle",
+			mailAddressClass : "mailAddress",
+			closeBtnClass : "closeBtn",
+			sendMailBtnClass : "mailSendBtn",
+			sendMailBtnLoadingClass : "mailSendBtnLoading",
+			linkEditor	:	"#d6wEditor",
+			tooBarLoadingIco : "#toolBarLoading"
+	},myConfig);
+	//** 定义方法 **
+	//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+  //** 显示&隐藏 **
+  //=================================================================================================================================
+	DOM.showSelf = function(){
+		if($.TEMP.lastOpenPanel){
+			var lastOpen = $.TEMP.lastOpenPanel.get(0);
+			$(lastOpen.config.onOffBtn).removeClass("underLine");
+			lastOpen.hideSelf(0);
+		}
+		$.TEMP.lastOpenPanel = $SELF;
+		
+		var nowEditFileName = $(config.linkEditor).get(0).nowEditFileName;
+		var mailTitleInput = $SELF.find("[class*='"+config.mailTitleClass+"']");
+		mailTitleInput.val(nowEditFileName);
+		mailTitleInput.attr("title",nowEditFileName);
+		
+		if(DOM.alreadyShow)return;
+		
+		$(DOM.config.onOffBtn).addClass("underLine");
+		$SELF.animate({ bottom: 0}, 1000, 'easeOutCubic',function(){
+			mailTitleInput.focus();
+		});
+		$("#shadow").show();
+		
+		DOM.alreadyShow = true;
+	}
+	
+	DOM.hideSelf = function(){
+		var lastOpen = $.TEMP.lastOpenPanel.get(0);
+		$(lastOpen.config.onOffBtn).removeClass("underLine");
+		if(!DOM.alreadyShow)return;
+		$SELF.animate({ bottom: -150}, 1000, 'easeOutCubic');
+		$("#shadow").hide();
+		DOM.alreadyShow = false;
+	}
+
+
+	//将内容发送邮件 + config.... 暂时默认
+	DOM.sendMail = function(){
+			if(DOM.isSending)return;
+			$(config.tooBarLoadingIco).fadeIn(500);
+			var sendMailBtn = $SELF.find("[class*='"+config.sendMailBtnClass+"']");
+			sendMailBtn.addClass(config.sendMailBtnLoadingClass);
+			var linkEditor = $(config.linkEditor).get(0);
+			var html = linkEditor.GetHTML();
+			
+			var mailTitle = $SELF.find("[class*='"+config.mailTitleClass+"']").val();
+			var mailAddress = $SELF.find("[class*='"+config.mailAddressClass+"']").val();
+			$.ajax({
+				url: 'actions.php', 
+				type: 'POST', 
+				data:{mailTo:mailAddress,title:mailTitle,action:"SENDMAIL",content:html}, 
+				dataType: 'html', 
+				timeout: -1, 
+				error: function(){
+					alert('Error loading PHP document');
+				}, 
+				success: function(result){
+					alert(result);
+				},
+				complete : function(){
+					$(config.tooBarLoadingIco).fadeOut(500);
+					sendMailBtn.removeClass(config.sendMailBtnLoadingClass);
+					DOM.isSending = false;
+				}
+			});
+			try{
+				//loading图标
+				config.btn.loadingIco = $('<span class="loading"></span>');
+				$(config.btn).append(config.btn.loadingIco);
+			}catch(e){}
+			DOM.isSending = true;
+	}
+		
+	//** 动作捆绑 **
+	//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+	$SELF.find("[class*='"+config.closeBtnClass+"']").click(function(){
+		DOM.hideSelf();
+	})
+	
+	$SELF.find("[class*='"+config.sendMailBtnClass+"']").click(function(){
+		DOM.sendMail();
+	})
+
+	// 按钮事件捆绑
+	$(config.onOffBtn).click(function(){
+		if(DOM.alreadyShow){
+			DOM.hideSelf(500);
+		}else{
+			DOM.showSelf(500);
+		}
+	});
+	
+	//** 默认运行区域 **
+	//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+}
+
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //=[ 其它工具扩展 ]=---------------------------->>>
 //=[ 功能 : 自动定义无href链接 ]=------------------------------------------------->>>
@@ -507,6 +590,22 @@ $.fn.defineEmptyLinks = function(){
 	if($.browser.msie)CollectGarbage();
 }
 
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//=[ 统计页面执行时间 ]=---------------------------->>>
+$.fn.showHtmlTime = function(Data){
+		var Now = new Date();
+		X.JsEndTime = Now.getTime();
+		var T = X.JsEndTime - X.JsStartTime;
+		if(!this){
+			return T;
+		}else{
+			$(this).html(T+"ms");
+		}
+		var outer = $(this).parent();
+		setTimeout(function(){outer.fadeOut(1000,function(){outer.html("About Us ...");outer.show(600);});},3000);
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //=[ 功能 : 居中 动画 ]=------------------------------------------------->>>
 $.fn.toScreenCenter = function(myConfig) { 
 				if(this.get(0).style.display == "none")return;
@@ -528,11 +627,13 @@ $.fn.toScreenCenter = function(myConfig) {
         }
 }
 
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //=[ 功能 : 兼容ff的outerHTML  + 返回时候去除jquery标记.. ]=------------------------------------------------->>>
 jQuery.fn.outer = function() { 
    return $('<div></div>').append( this.eq(0).clone()).html().replace(eval('/jQuery.*?\"null\"/ig'),'');
 } 
 
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //=[ 功能 : Date prototype 扩展 时间格式化 ]=------------------------------------------------->>>
 //PS.new Date().format("yyyy.M.d mm分ss秒")
 Date.prototype.format = function(format)
@@ -583,9 +684,11 @@ function FCKeditor_OnComplete(editorInstance){
 	var inputfc = body.find("#fc");
 
 	//非编辑区域跳开~
-	spans[0].contentEditable = false; 
-	spans[0].designMode = "Off"; 
-	spans[0].unselectable = true; 
+	try{
+		spans[0].contentEditable = false; 
+		spans[0].designMode = "Off"; 
+		spans[0].unselectable = true;
+	}catch(e){}
 	spans.bind("mousemove",function(e){
 		editorInstance.EditorWindow.parent.document.body.focus();
 	})
@@ -651,19 +754,47 @@ $(function(){
 		}
 		$("#draftsBox").toBeFileBrowser(draftsBoxConfig);
 		
+		//初始化邮件发送箱
+		var mailPanelConfig = {
+			linkEditor	:	"#d6wEditor"
+		}
+		$("#mailPanel").toBeMailPanel(mailPanelConfig);
+
+		//初始化History控制器
+		$("#historyAPP").toBeHistoryBody();//自动全局化
 		
-		// 按钮事件捆绑
-		$("#mailBtn").toggle(
-		function(){
-			//d6wEditor.sendMail({btn:$(this)});
-			$("#mailPanel").animate({ bottom: 0}, 1000, 'easeOutCubic');
-			$("#shadow").show();
-		},
-		function(){
-			$("#mailPanel").animate({ bottom: -150}, 1000, 'easeOutCubic');
-			$("#shadow").hide();
-		})
+		//重新遍历所有a +js void(0) 兼容hover
+		$("a").defineEmptyLinks();
 		
+		// 写入载入时间
+		$("#jsRunTime").showHtmlTime();
+
+
+		 
+
+	
+	
+	
+	//乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~
+
+
+		//前景布局
+		$("#shadowSWF").flash({
+							src: $.I.config.skinPath + '/flash/snow.swf',
+							width: '100%',
+							height: document.body.scrollHeight,
+							wmode:'transparent',
+							SCALE:'noscale',
+							flashvars: {Pheight: document.body.scrollHeight,Pwidth:window.screen.width,amc_zi: ' ' }
+			 			});
+
+		
+		$(window).resize( function() { 
+										$('#shadowSWF').height(document.body.scrollHeight);
+										$('#shadowSWF').width(document.body.scrollWidth);
+									 } );
+									 
+									 
 		/*
 		$("#saveDraftsBtn").click(function(){
 			draftsBox.saveDraft({btn:$(this)});
@@ -673,12 +804,6 @@ $(function(){
 		$("#designLayoutBtn").click(function(){
 			d6wEditor.designLayout();
 		})
-		
-		//初始化History控制器
-		$("#historyAPP").toBeHistoryBody();//自动全局化
-		
-		//重新遍历所有a +js void(0) 兼容hover
-		$("a").defineEmptyLinks();
 		
 		
 		//$("#SCV").draggable({ handle: '#scvHandle' });
@@ -693,28 +818,6 @@ $(function(){
 				$("#shadow").hide();
 			}
 		)
-		
-		// 写入载入时间
-		$.I.HtmlTime({Targets:"#jsRunTime"});
-
-		//前景布局
-		
-		$('#shadowSWF').flash({
-							src: $.I.config.skinPath + '/flash/snow.swf',
-							width: '100%',
-							height: document.body.scrollHeight,
-							wmode:'transparent',
-							SCALE:'noscale',
-							flashvars: {Pheight: document.body.scrollHeight,Pwidth:window.screen.width,amc_zi: ' ' }
-			 			});
-
-		
-		$(window).resize( function() { 
-										$('#ForeGround').height(document.body.scrollHeight);
-										$('#ForeGround').width(document.body.scrollWidth);
-									 } );
-	
-
 
 		//小小test一下
 		$("#test").click(function(){

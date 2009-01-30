@@ -16,6 +16,10 @@
 	
 	<!-- {{{{ 模板箱 -->
 	<div id="templatesBox" class="FBBox">
+		<div class="FBTitle forList">
+			<div class="FBTitleL"></div><div class="FBTitleR"></div>
+			文件浏览
+		</div>
 		<div id="templatesList" class="FBList">
 			<ul class="fileTree" model="true">
 				<li class="imFolder collapsed" title="*path*" path="*path*" pathForScript="*pathForScript*"><span class="item directory">*name*</span></li>
@@ -23,8 +27,12 @@
 				<li class="imSelected"></li>
 			</ul>
 		</div>
+		
 		<div id="templateShowRoom" class="FBShowRoom">
-			<iframe class="FBIframe"></iframe>
+			<div class="FBTitle"><div class="FBTitleL"></div><div class="FBTitleR"></div>
+				页面预览窗口	<span class="titleFileRoot"></span>
+			</div>
+			<iframe class="FBIframe" src="Files/D6W/fileBrowerDefault.html"></iframe>
 		</div>
 		<a id="templatesBoxCloseBtn" class="Btn FBCloseBtn" title="关闭我的模板箱"></a>
 		<a id="templatesBoxReloadBtn" class="Btn FBReloadBtn" title="刷新模板文件夹"></a>
@@ -33,6 +41,10 @@
 	
 	<!-- {{{{ 草稿箱 -->
 	<div id="draftsBox" class="FBBox">
+		<div class="FBTitle forList">
+			<div class="FBTitleL"></div><div class="FBTitleR"></div>
+			文件浏览
+		</div>
 		<div id="draftsList" class="FBList">
 			<ul class="fileTree" model="true">
 				<li class="imFolder collapsed" title="*path*" path="*path*" pathForScript="*pathForScript*"><span class="item directory">*name*</span></li>
@@ -40,6 +52,9 @@
 			</ul>
 		</div>
 		<div id="draftShowRoom" class="FBShowRoom">
+			<div class="FBTitle"><div class="FBTitleL"></div><div class="FBTitleR"></div>
+				页面预览窗口	<span class="titleFileRoot"></span>
+			</div>
 			<iframe class="FBIframe"></iframe>
 		</div>
 		<a id="draftsBoxCloseBtn" class="FBCloseBtn Btn" title="关闭我的草稿箱"></a>
@@ -124,6 +139,26 @@
 	</textarea>
 	<!-- }}}} 编辑器 -->
 	
+	<!-- {{{{ Mail板块 -->
+	<div id="mailPanel" class="mailPanel">
+		<div class="mailPanelLogo"></div>
+		<a class="closeBtn"></a>
+		<div class="mailStep1">
+			<div class="stepTitle">邮件标题</div>
+			<div class="inputArea"><div class="inputAreaL"></div><div class="inputAreaR"></div>
+				<input class="mailTitle" />
+			</div>
+		</div>
+		<div class="mailStep2">
+			<div class="stepTitle">目标邮箱地址</div>
+			<div class="textArea"><div class="textAreaL"></div><div class="textAreaR"></div>
+				<textarea class="mailAddress">sxnow@126.com;swffa@foxmail.com;</textarea>
+			</div>
+			<a class="mailSendBtn" title="发送测试邮件"></a>
+		</div>
+	</div>
+	<!-- }}}} Mail板块 -->
+	
 	<!-- {{{{ 按钮栏 -->
 	<div id="toolBar">
 		<a id="templatesBoxBtn" class="Btn"><div class="toolBarSelectTpl BtnIco"></div><span>选择模板</span></a>
@@ -135,26 +170,22 @@
 	</div>
 	<!-- }}}} 按钮栏 -->
 
-	<!-- {{{{ Mail板块 -->
-	<div id="mailPanel" class="mailPanel">
-		邮
-	</div>
 
-	<!-- }}}} Mail板块 -->
 
 	<!-- {{{{ 关于 -->
-	<div id="shadowSWF" style="display:none;top:0px;left:0px;position:absolute; z-index:38; overflow:hidden;"></div>
+	<div id="shadowSWF" style="display:none;top:0px;left:0px;position:absolute; z-index:1986; overflow:hidden;"></div>
 	<div id="about" class="about">
-		<div style="margin-top:150px;">今年貌似没看到杭州下雪 ...</div>
+		<div style="margin-top:20px;">今年貌似没看到杭州下雪 ...</div>
 		<div>此效果是测试你机子性能的一种方式...如果你觉得你的机器够牛的话....</div>
 		<div>我Chobits的配置:PM-1.6G DDR-1G ATi9600-64M</div>
-		<div>SVN:https://goblin-mail.googlecode.com/svn/trunk/</div>
+		<div>SVN:<a href="https://goblin-mail.googlecode.com/svn/trunk/" target="_blank">https://goblin-mail.googlecode.com/svn/trunk/</a></div>
+		<div class="about-mycode"></div>
 	</div>
 	
 	<div id="copyRight" title="关于我们...">
 		<!-- Happiness only real when shared <br /> -->
 		AliUED EDM Goblin v1.2α <br />
-		LoadingTime : <span id="jsRunTime"></span>ms
+		<span>LoadingTime : <span id="jsRunTime">loading...</span></span>
 	</div>
 	<!-- }}}} 关于 -->
 	

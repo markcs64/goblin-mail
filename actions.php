@@ -128,18 +128,19 @@ switch(strtoupper($action))
 		$mail->SMTPAuth   = true;
 		$mail->Host       = "smtp.gmail.com";
 		$mail->SMTPSecure = "ssl";
+		//记得开启php配置 -> extension=php_openssl.dll
 		$mail->Port = 465;
 		$mail->Username   = "aliued.goblin@gmail.com";
 		$mail->Password   = "hello1234";
 		$mail->From       = "aliued.goblin@gmail.com";
 		$mail->FromName   = "ALiUED - Goblin*darkSnow";
-		$mail->Subject    = "=?UTF-8?B?" . base64_encode("D6W TEST MAIL - from Goblin v1.0α") . "?=";
+		$mail->Subject    = "=?UTF-8?B?" . base64_encode($_REQUEST['title']) . "?=";
 		$mail->WordWrap   = 10;
 		$mailBody = $_REQUEST['content'];
 		//$mailBody = $mail->getFile('contents.php');
 		//$mailBody = eregi_replace("[\]",'',$mailBody);
 		$mail->MsgHTML($mailBody);
-		$mailToArray = explode(';', $_REQUEST['mailTo']);
+		$mailToArray = explode(';', rtrim($_REQUEST['mailTo'],";"));
 		foreach( $mailToArray as $mailTo ) {
 			$mail->AddAddress($mailTo);
 		}

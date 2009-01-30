@@ -1,0 +1,151 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>
+            мов╖
+        </title>
+        <script type="text/javascript">
+        
+			var isIE = !!(window.attachEvent && !window.opera);
+			var isOpera = !!window.opera;
+			var isSafari = navigator.userAgent.indexOf('AppleWebKit/') > -1;
+			var isMoz = navigator.userAgent.indexOf('Gecko') > -1 && navigator.userAgent.indexOf('KHTML') == -1;
+			var isMobileSafari = !!navigator.userAgent.match(/Apple.*Mobile.*Safari/);
+			
+			
+			var oEventUtil = new Object();
+
+			oEventUtil.addEventHandler = function(oTarget,sEventType,fnHandler){//sEventType is a type without 'on'
+				if(oTarget.addEventListener){
+					oTarget.addEventListener(sEventType,fnHandler,false);
+				}else if(oTarget.attachEvent){
+					oTarget.attachEvent("on"+sEventType,fnHandler);
+				}else{
+					oTarget["on"+sEventType] = fnHandler;
+				}
+			}
+
+			oEventUtil.removeEventHandler = function(oTarget,sEventType,fnHandler){//sEventType is a type without 'on'
+				if(oTarget.removeEventListener){
+					oTarget.removeEventListener(sEventType,fnHandler,false);
+				}else if(oTarget.detachEvent){
+					oTarget.detachEvent("on"+sEventType,fnHandler);
+				}else{
+					oTarget["on"+sEventType] = null;
+				}
+			}
+
+			oEventUtil.formatEvent = function(oEvent){
+				if(isIE){
+					if(oEvent.type == 'keypress'){
+						oEvent.charCode = oEvent.keyCode;
+						oEvent.keyCode = 0;
+					}
+					if(oEvent.type == 'keydown' || oEvent.type == 'keyup'){
+						oEvent.charCode = 0;
+					}
+					oEvent.eventPhase = 2;
+					oEvent.isChar = (oEvent.charCode > 0);
+					oEvent.pageX = oEvent.clientX + document.body.scrollLeft - document.body.clientLeft;
+					oEvent.pageY = oEvent.clientY + document.body.scrollTop - document.body.clientTop;
+			        
+					if(oEvent.type == 'mouseout'){
+						oEvent.relatedTarget = oEvent.toElement;
+					}else if(oEvent.type == 'mouseover'){
+						oEvent.relatedTarget = oEvent.fromElement;
+					}
+			        
+					oEvent.preventDefault = function(){
+						oEvent.returnValue = false;
+					}
+			        
+					oEvent.stopPropagation = function(){
+						oEvent.cancelBubble = true;
+					};
+			        
+					oEvent.target = oEvent.srcElement;
+					oEvent.time = (new Date()).getTime();
+				}
+				//oEvent.mousePosition = {x,y}
+				return oEvent;
+			}
+
+			oEventUtil.getEvent = function(){
+				if(window.event)
+					return this.formatEvent(window.event);
+				else
+					return this.formatEvent(oEventUtil.getEvent.caller.arguments[0]);
+			}
+        
+            function $(id){
+                return document.getElementById(id);
+            }
+            
+			window.onload = function(){
+				var drag1 = new Drag($("header"),$("container"));
+				var drag = new Drag($("Div2"),$("Div1"));
+			}
+			
+			function Drag(oHandle,oContainer){
+				if(typeof Drag.zIndex == "undefined")
+					Drag.zIndex = 1000;
+				var handle = oHandle;
+				var container = oContainer;
+				var offsetX = 0;
+				var offsetY = 0;
+				var isDragging = false;
+			    
+				var mouseDown = function(){
+					oEvent = oEventUtil.getEvent();
+					Drag.zIndex++;
+					//alert(Drag.zIndex);
+					container.style.zIndex = Drag.zIndex;
+					if(oEvent.button == 1 || oEvent.button == 0){
+						container.style.position = 'absolute';
+						offsetX =  oEvent.pageX - container.offsetLeft;
+						offsetY = oEvent.pageY - container.offsetTop;
+						if(handle.innerHTML == ""){
+							handle.innerHTML = " ";
+						};
+						oEventUtil.addEventHandler(document,"mousemove",mouseMove);
+						isDragging = true;
+					}
+				};
+			    
+				var mouseMove = function(){
+					oEvent = oEventUtil.getEvent();
+					if(isDragging){
+						container.style.top = (oEvent.pageY - offsetY) + 'px';
+						container.style.left = (oEvent.pageX - offsetX) + 'px';
+					}
+				};
+
+				var mouseUp = function(){
+					isDragging = false;
+					oEventUtil.removeEventHandler(document,"mousemove",mouseMove);
+				};
+				
+				oEventUtil.addEventHandler(handle,"mousedown",mouseDown);
+				oEventUtil.addEventHandler(handle,"mouseup",mouseUp);
+			}
+        </script>
+        <style type="text/css">
+            #container{width:200px;height:150px;background:#CCCCCC;}
+            #header{width:100%;height:30px;background:#666666;cursor:move;}
+        </style>
+    </head>
+    <body>
+        
+        <div id="Div1" style ="width:100px;">
+            <div id="Div2">Handle</div>
+            Content
+        </div>
+        <div id="container">
+            <div id="header"></div>
+        </div>
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    </body>
+</html>

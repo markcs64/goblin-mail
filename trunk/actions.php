@@ -125,15 +125,18 @@ switch(strtoupper($action))
 		$mail->CharSet = "UTF-8";
 		//test
 		$mail->IsSMTP();
-		$mail->SMTPAuth   = true;
-		$mail->Host       = "smtp.gmail.com";
-		$mail->SMTPSecure = "ssl";
+		//$mail->SMTPAuth   = true;
+		//$mail->Host       = "smtp.gmail.com";
+		//$mail->SMTPSecure = "ssl";
 		//记得开启php配置 -> extension=php_openssl.dll
-		$mail->Port = 465;
-		$mail->Username   = "aliued.goblin@gmail.com";
-		$mail->Password   = "hello1234";
-		$mail->From       = "aliued.goblin@gmail.com";
-		$mail->FromName   = "ALiUED - Goblin*darkSnow";
+		//$mail->Port = 465;
+		//$mail->Username   = "aliued.goblin@gmail.com";
+		//$mail->Password   = "hello1234";
+		//$mail->From       = "aliued.goblin@gmail.com";
+		//$mail->FromName   = "ALiUED - Goblin*darkSnow";
+		$mail->Host       = "localhost";
+		$mail->From       = "aliued@alibaba.com";
+		$mail->FromName   = "EDM Goblin";
 		$mail->Subject    = "=?UTF-8?B?" . base64_encode($_REQUEST['title']) . "?=";
 		$mail->WordWrap   = 10;
 		$mailBody = $_REQUEST['content'];

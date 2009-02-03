@@ -458,7 +458,30 @@ $.fn.toBeHistoryBody = function(myConfig) {
 
 }
 
-
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//=[ mail控制面板 ]=------------------------------------------------->>>
+$.fn.toBeMsgBox = function(myConfig) {
+	var DOM = this.get(0);if(eval("typeof("+DOM.id+")") == "undefined"){eval(DOM.id + " = DOM;");}//DOMID -> 全局
+	var $SELF = this;
+	var config = DOM.config = $.extend({
+		target : "msgBox"
+	},myConfig);
+	DOM.showSelf = function(config){
+		if(DOM.alreadyShow){
+			clearTimeout(DOM.IV);DOM.IV = setTimeout(function(){DOM.hideSelf();},4000)
+			return;
+		}
+		$SELF.animate({ top: 0}, 1000, 'easeOutCubic',function(){});
+		DOM.alreadyShow = true;
+		if(config.autoBack){
+			DOM.IV = setTimeout(function(){DOM.hideSelf();},4000)
+		}
+	}
+	DOM.hideSelf = function(){
+		$SELF.animate({ top: -100}, 1000, 'easeOutCubic',function(){});
+		DOM.alreadyShow = false;
+	}
+}
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //=[ mail控制面板 ]=------------------------------------------------->>>
@@ -477,7 +500,9 @@ $.fn.toBeMailPanel = function(myConfig) {
 			sendMailBtnClass : "mailSendBtn",
 			sendMailBtnLoadingClass : "mailSendBtnLoading",
 			linkEditor	:	"#d6wEditor",
-			tooBarLoadingIco : "#toolBarLoading"
+			tooBarLoadingIco : "#toolBarLoading",
+			linkMsgBox : "#msgBox",
+			sendMailCount : "#sendMailCount"
 	},myConfig);
 	//** 定义方法 **
 	//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -538,7 +563,9 @@ $.fn.toBeMailPanel = function(myConfig) {
 					alert('Error loading PHP document');
 				}, 
 				success: function(result){
-					alert(result);
+					//alert(result);
+					$(DOM.config.linkMsgBox).get(0).showSelf({autoBack:true});
+					$(DOM.config.sendMailCount).html(parseInt($(DOM.config.sendMailCount).html())+1);
 				},
 				complete : function(){
 					$(config.tooBarLoadingIco).fadeOut(500);
@@ -602,7 +629,7 @@ $.fn.showHtmlTime = function(Data){
 			$(this).html(T+"ms");
 		}
 		var outer = $(this).parent();
-		setTimeout(function(){outer.fadeOut(1000,function(){outer.html("About Us ...");outer.show(600);});},3000);
+		//setTimeout(function(){outer.fadeOut(1000,function(){outer.html("About Us ...");outer.show(600);});},3000);
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -705,6 +732,9 @@ function FCKeditor_OnComplete(editorInstance){
 
 $(function(){
 
+		//初始化消息面板
+		$("#msgBox").toBeMsgBox();
+		
 		//初始化编辑器
 		var editorConfig = {
 			type:"FCK",
@@ -779,6 +809,7 @@ $(function(){
 
 
 		//前景布局
+		
 		$("#shadowSWF").flash({
 							src: $.I.config.skinPath + '/flash/snow.swf',
 							width: '100%',
@@ -863,7 +894,6 @@ $(function(){
 				if($.browser.msie)$("#scvHandle")[0].releaseCapture();
 				$("body").unbind("mousemove");
 			});
-			
 		})
 
 		

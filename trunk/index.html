@@ -14,6 +14,10 @@
 	<div id="historyAPP"></div>
 	<div id="shadow" class="shadow"></div>
 	
+	<div id="msgBox" class="msgBox">
+		<span class="msgMailSended">测试邮件发送成功! (已发送:<span id="sendMailCount">0</span>封)</span>
+	</div>
+	
 	<!-- {{{{ 模板箱 -->
 	<div id="templatesBox" class="FBBox">
 		<div class="FBTitle forList">
@@ -141,8 +145,8 @@
 	
 	<!-- {{{{ Mail板块 -->
 	<div id="mailPanel" class="mailPanel">
-		<div class="mailPanelLogo"></div>
 		<a class="closeBtn"></a>
+		<div class="mailPanelLogo"></div>
 		<div class="mailStep1">
 			<div class="stepTitle">邮件标题</div>
 			<div class="inputArea"><div class="inputAreaL"></div><div class="inputAreaR"></div>
@@ -152,9 +156,9 @@
 		<div class="mailStep2">
 			<div class="stepTitle">目标邮箱地址</div>
 			<div class="textArea"><div class="textAreaL"></div><div class="textAreaR"></div>
-				<textarea class="mailAddress">sxnow@126.com;swffa@foxmail.com;</textarea>
+				<textarea class="mailAddress">swffa@foxmail.com;</textarea>
 			</div>
-			<a class="mailSendBtn" title="发送测试邮件"></a>
+			<a class="mailSendBtn">发送</a>
 		</div>
 	</div>
 	<!-- }}}} Mail板块 -->
@@ -164,8 +168,10 @@
 		<a id="templatesBoxBtn" class="Btn"><div class="toolBarSelectTpl BtnIco"></div><span>选择模板</span></a>
 		<a id="draftsBoxBtn" class="Btn"><div class="toolBarGetDraft BtnIco"></div><span>提取草稿</span></a>
 		<a id="mailBtn" class="Btn"><div class="toolBarMail BtnIco"></div><span>邮件测试</span></a>
+		<!--
 		<a id="collectBtn" class="Btn isFalse"><div class="toolBarCollect BtnIco"></div><span>元素收集(开发中...)</span></a>
 		<a id="helpBtn" class="Btn isFalse"><div class="toolBarHelp BtnIco"></div><span>帮助</span></a>
+		-->
 		<span id="toolBarLoading"></span>
 	</div>
 	<!-- }}}} 按钮栏 -->
@@ -189,7 +195,7 @@
 	</div>
 	<!-- }}}} 关于 -->
 	
-	<script type="text/javascript" src="JS/jQuery/jQuery.min.js"></script>
+	<script type="text/javascript" src="JS/jQuery/jQuery.js"></script>
 	<!--<script type="text/javascript" src="JS/jQuery/Ui/Ui.js"></script>-->
 	<!-- {{{{ wait JsBuild -->
 	<script type="text/javascript" src="JS/d6w.js"></script>

@@ -25,7 +25,7 @@ $.fn.toBeFileTree = function(myConfig, selectCall,collapseCall) {
 					  cache:true,
 					 	data: {action:"NEWFILETREE",path:path,allowExt:config.allowExt},
 					  success: function(json){
-					  		$(target).find('ul[@model!="true"]').remove();
+					  		$(target).find('ul[model!="true"]').remove();
 					  		
 							  //for folders
 							  var foldersHTML = "";
@@ -55,7 +55,7 @@ $.fn.toBeFileTree = function(myConfig, selectCall,collapseCall) {
 								newUlHTML = newUlItem.html(lastHTML).outer();lastHTML=null;
 								target.innerHTML += newUlHTML;newUlHTML=null;
 								
-								$(target).find('ul[@model!="true"]').slideDown({ duration: config.expandSpeed, easing: config.expandEasing });
+								$(target).find('ul[model!="true"]').slideDown({ duration: config.expandSpeed, easing: config.expandEasing });
 								
 								DOM.bindTree(target);
 								var itemIco = $(target).find('[class*="item"]');
@@ -67,7 +67,7 @@ $.fn.toBeFileTree = function(myConfig, selectCall,collapseCall) {
 				}
 				
 				DOM.bindTree = function(target) {
-					$(target).find('LI[@class*="imFile"]').hover(
+					$(target).find('LI[class*="imFile"]').hover(
 						function(){
 							$(this).addClass("mouseHover");
 						},
@@ -109,7 +109,7 @@ $.fn.toBeFileTree = function(myConfig, selectCall,collapseCall) {
 				}
 
 				// set TPLs
-				DOM.ulModel = $SELF.find("ul[@model='true']");DOM.ulModel.hide();
+				DOM.ulModel = $SELF.find("ul[model='true']");DOM.ulModel.hide();
 				DOM.folderLiHTML = DOM.ulModel.find("li[class*='imFolder']").outer();
 				DOM.fileLiHTML = DOM.ulModel.find("li[class*='imFile']").outer();
 

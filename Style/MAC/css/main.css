@@ -32,7 +32,7 @@ a:hover{color:#8F4116;}
 
 /** fileBrowser **/
 .FBBox{position:absolute;height:88%;width:100%;margin:18px;display:none;z-index:1129;}
-.FBList{float:left;position:relative;overflow:auto;width:250px;padding:1% 0 0 0;height:99%;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:2px solid #BBBBBB;}
+.FBList{float:left;position:relative;overflow:auto;width:250px;padding:14px 0 0 0;height:99%;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:2px solid #BBBBBB;}
 .FBTitle{color:#6C6C6C;position:absolute;top:-16px;left:2%;height:32px;line-height:32px;padding:0 15px;background:url(../images/main/sprite.gif) 0 -100px repeat-x;z-index:1130;}
 .FBTitle.forList{left:10px;}
 .FBTitle a{color:#0080C0; padding:0 16px 0 0;background:url(../images/main/linkRightArrow.gif) right top no-repeat;}
@@ -77,8 +77,8 @@ a:hover{color:#8F4116;}
 .mailStep1 .stepTitle{margin:25px 0 0 65px;}
 .mailStep1 .inputArea{position:relative;margin:10px 0 0 0;height:32px;padding:3px 0 0 0;width:190px;}
 .mailStep1 .inputAreaL{position:absolute;top:0px;left:0px;width:12px;height:32px;background:url(../images/main/sprite.gif) left -300px no-repeat;}
-.mailStep1 .inputAreaR{position:absolute;top:0px;right:0px;width:12px;height:32px;background:url(../images/main/sprite.gif) left -400px no-repeat;}
-.mailStep1 .mailTitle{width:165px;margin:-1px 0 0 0;padding:4px 10px;font:14px "微软雅黑",arial,verdana;background:url(../images/famfamfamAluminum/background.light.gif);border:1px solid #ACACAC;color:#72619E;}
+.mailStep1 .inputAreaR{position:absolute;top:0px;right:0px;width:12px;height:33px;background:url(../images/main/sprite.gif) left -399px no-repeat;}
+.mailStep1 .mailTitle{width:165px;margin:-1px 0 0 0;padding:4px 10px;*padding:3px 10px;font:14px "微软雅黑",arial,verdana;background:url(../images/famfamfamAluminum/background.light.gif);border:1px solid #ACACAC;color:#72619E;}
 
 .mailStep2 .stepTitle{margin:10px 0 0 115px;}
 .mailStep2 .textArea{position:relative;width:290px;margin:3px 0 0 10px;}
@@ -87,9 +87,13 @@ a:hover{color:#8F4116;}
 .mailStep2 .mailAddress{margin:0 0 0 -6px;width:264px;height:70px;padding:3px 8px;font:normal 12px tahoma;overflow:auto;background:url(../images/famfamfamAluminum/background.light.gif);border:1px solid #ACACAC;color:#72619E;}
 
 
-.mailPanel .mailSendBtn{display:block;position:absolute;right:16px;top:52px;width:45px;height:38px;background:url(../images/main/spriteMailBoxSendBtn.gif) 0 0 no-repeat;}
-.mailPanel .mailSendBtn:hover{background-position:0 -100px;}
+.mailPanel .mailSendBtn{display:block;position:absolute;padding:26px 0 0 0;text-align:center;font-size:12px;color:#6C6C6C;right:16px;top:52px;width:45px;height:38px;background:url(../images/main/spriteMailBoxSendBtn.gif) 0 0 no-repeat;}
+.mailPanel .mailSendBtn:hover{background-position:0 -100px;color:#6F609B;}
 .mailPanel .mailSendBtnLoading{background-position:0 -200px !important;}
+
+
+.msgBox{position:absolute;padding:15px 20px;font-size:15px;top:-100px;right:25px;z-index:1985;width:300px;color:#73833D;background-image:url(../images/famfamfamAluminum/background.light.gif);border:3px solid #B6B6B6;border-top:none;}
+.msgMailSended{display:block;background:url(../images/main/toolBarMail.gif) 0 2px no-repeat;padding-left:20px;}
 
 /** for jQfileTree PS.gifsor属性特殊处理 **/
 UL.fileTree LI {

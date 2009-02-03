@@ -134,7 +134,7 @@ switch(strtoupper($action))
 		//$mail->Password   = "hello1234";
 		//$mail->From       = "aliued.goblin@gmail.com";
 		//$mail->FromName   = "ALiUED - Goblin*darkSnow";
-		$mail->Host       = "localhost";
+		$mail->Host       = "10.0.85.8";
 		$mail->From       = "aliued@alibaba.com";
 		$mail->FromName   = "EDM Goblin";
 		$mail->Subject    = "=?UTF-8?B?" . base64_encode($_REQUEST['title']) . "?=";

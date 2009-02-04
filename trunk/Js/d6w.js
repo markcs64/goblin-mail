@@ -485,6 +485,37 @@ $.fn.toBeMsgBox = function(myConfig) {
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //=[ mail控制面板 ]=------------------------------------------------->>>
+$.fn.toBeCounter = function(myConfig) {
+	var DOM = this.get(0);if(eval("typeof("+DOM.id+")") == "undefined"){eval(DOM.id + " = DOM;");}//DOMID -> 全局
+	var $SELF = this;
+	var config = DOM.config = $.extend({
+		script : "actions.php",
+		counterFile : "Data/counter.txt"
+	},myConfig);
+	
+	$.ajax({
+		url: config.script, 
+		type: 'POST',
+		data:{counterFile:config.counterFile,action:"COUNTER"},
+		cache: false,
+		dataType: "json",
+		timeout: -1, 
+		error: function(o){alert(o);}, 
+		success: function(json){
+			$SELF.flash({
+								src: $.I.config.skinPath + '/flash/counter.swf',
+								width:'200px',
+								height:'60px',
+								wmode:'transparent',
+								SCALE:'noscale',
+								flashvars: {total:json.total,yes:json.yesterday,today:json.today,you:json.you,load:"end"}
+			});
+		}
+	});
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//=[ mail控制面板 ]=------------------------------------------------->>>
 $.fn.toBeMailPanel = function(myConfig) {
 	//** 静默配置定义 **
 	//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -798,14 +829,11 @@ $(function(){
 		$("a").defineEmptyLinks();
 		
 		// 写入载入时间
-		$("#jsRunTime").showHtmlTime();
+		//$("#jsRunTime").showHtmlTime();
+		$("#counter").toBeCounter();
+			
 
 
-		 
-
-	
-	
-	
 	//乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~乱来了~~
 
 
@@ -929,12 +957,3 @@ $(function(){
 		 
 		 
 })
-
-
-//Analytics
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-try {
-var pageTracker = _gat._getTracker("UA-7317259-1");
-pageTracker._trackPageview();
-} catch(err) {}

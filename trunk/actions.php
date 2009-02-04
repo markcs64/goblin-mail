@@ -133,7 +133,7 @@ switch(strtoupper($action))
 		$mail->Username   = "aliued.goblin@gmail.com";
 		$mail->Password   = "hello1234";
 		$mail->From       = "aliued.goblin@gmail.com";
-		$mail->FromName   = "UED信使.敬上";
+		$mail->FromName   = "{ UED 信使.敬上 }";
 		/*
 		$mail->Host       = "10.0.85.8";
 		$mail->From       = "aliued.goblin@gmail.com";

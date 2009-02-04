@@ -133,7 +133,7 @@ switch(strtoupper($action))
 		$mail->Username   = "aliued.goblin@gmail.com";
 		$mail->Password   = "hello1234";
 		$mail->From       = "aliued.goblin@gmail.com";
-		$mail->FromName   = "EDM Goblin";
+		$mail->FromName   = "UED信使.敬上";
 		/*
 		$mail->Host       = "10.0.85.8";
 		$mail->From       = "aliued.goblin@gmail.com";
@@ -152,7 +152,7 @@ switch(strtoupper($action))
 		$ext = strtolower(end(explode(".",$_REQUEST['tplPath'])));
 		fputs($file, $mailBody); 
 		fclose($file);
-		$mail->AddAttachment("Files/mailDemo.html", "Mail Demo.$ext"); 
+		$mail->AddAttachment("Files/mailDemo.html", "测试邮件 - ".$_REQUEST['title'].".$ext"); 
 		
 		//针对于%%track链接的兼容
 		$mailBody = preg_replace('/%%track[\s\S\n ]*?{(.*?)}[\s\S\n ]*?%%/','$1',$mailBody);

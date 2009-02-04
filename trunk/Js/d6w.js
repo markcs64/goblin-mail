@@ -553,10 +553,11 @@ $.fn.toBeMailPanel = function(myConfig) {
 			
 			var mailTitle = $SELF.find("[class*='"+config.mailTitleClass+"']").val();
 			var mailAddress = $SELF.find("[class*='"+config.mailAddressClass+"']").val();
+			
 			$.ajax({
 				url: 'actions.php', 
 				type: 'POST', 
-				data:{mailTo:mailAddress,title:mailTitle,action:"SENDMAIL",content:html,tplPath:$(DOM.config.linkEditor).get(0).nowEditFilePath}, 
+				data:{mailTo:mailAddress,title:mailTitle,action:"SENDMAIL",content:html,tplPath:encodeURI($(DOM.config.linkEditor).get(0).nowEditFilePath)}, 
 				dataType: 'html', 
 				timeout: -1, 
 				error: function(){

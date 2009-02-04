@@ -394,7 +394,7 @@ $.fn.toBeFileBrowser = function(myConfig) {
 			$.ajax({
 			url: 'actions.php', 
 			type: 'POST', 
-			data:{filePath:"Files/Drafts/" + draftFileName,action:"WRITEFILE",content:html}, 
+			data:{filePath:"Files/Archive/" + draftFileName,action:"WRITEFILE",content:html}, 
 			dataType: 'html', 
 			timeout: 1000, 
 			error: function(){

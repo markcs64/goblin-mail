@@ -23,15 +23,15 @@ a:hover{color:#8F4116;}
 
 /**------------------------------------------------------------------| >>>> 页面元素样式 |**/
 /** CR **/
-#copyRight{color:#6C6C6C;border-left:3px solid #6C6C6C;padding-left:5px;position:fixed;_position:absolute;bottom:5px;right:15px;font:bold 10px verdana;z-index:1206;cursor:url(../cursor/Hand.gif),pointer;*cursor:url(Style/MAC/cursor/Hand.gif),pointer;}
-
+#copyRight{color:#6C6C6C;height:28px;padding-left:5px;position:fixed;_position:absolute;bottom:6px;right:15px;font:bold 10px verdana;z-index:1206;cursor:url(../cursor/Hand.gif),pointer;*cursor:url(Style/MAC/cursor/Hand.gif),pointer;}
+#counter{position:absolute;top:-30px;left:-24px;}
 /** 全页覆盖背景层 **/
 /** ie下更好看的背景效果 缺点:耗资源 .alphaBG{position:fixed;_position:absolute;left:0px;top:0px;height:100%;width:100%;background:#3D3D3D;text-align:center;filter:progid:DXImageTransform.Microsoft.Alpha(style=1,startY=0,finishY=100,startX=0,finishX=100,opacity=25,finishOpacity=80);-moz-opacity:0.6;opacity:0.6;z-index:1212;}*/
 .shadow{display:none;position:fixed;_position:absolute;left:0px;top:0px;height:100%;width:100%;background:url(../images/main/shadowBg.gif) #3D3D3D;text-align:center;filter:alpha(opacity=80);-moz-opacity:0.8;opacity:0.8;z-index:37;}
 /** notice **/
 
 /** fileBrowser **/
-.FBBox{position:absolute;height:88%;width:100%;margin:18px;display:none;z-index:1129;}
+.FBBox{position:absolute;height:87%;width:100%;margin:18px;display:none;z-index:1129;}
 .FBList{float:left;position:relative;overflow:auto;width:250px;padding:14px 0 0 0;height:99%;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:2px solid #BBBBBB;}
 .FBTitle{color:#6C6C6C;position:absolute;top:-16px;left:2%;height:32px;line-height:32px;padding:0 15px;background:url(../images/main/sprite.gif) 0 -100px repeat-x;z-index:1130;}
 .FBTitle.forList{left:10px;}
@@ -102,7 +102,7 @@ UL.fileTree LI {
 }
 
 /** toolBar **/
-#toolBar{height:5%;width:100%;background:url(../images/famfamfamAluminum/background.dark.gif);position:fixed;*position:absolute;bottom:0px;left:0px;padding:6px 0 0 0;z-index:1205;border-top:3px solid #939393;}
+#toolBar{height:32px;width:100%;background:url(../images/famfamfamAluminum/background.dark.gif);position:fixed;*position:absolute;bottom:0px;left:0px;padding:6px 0 0 0;z-index:1205;border-top:3px solid #939393;}
 #toolBar .Btn{position:relative;float:left;display:block;padding:0 0 1px 15px;margin:0 0 0 18px;*margin:0 0 0 6px;height:26px;line-height:26px;background:url(../images/famfamfamAluminum/toolbar.longstart.gif) no-repeat;z-index:1985;hide-focus:expression(this.hideFocus=true);outline: none;}
 #toolBar .isFalse{filter:alpha(opacity=50);-moz-opacity:0.5;opacity:0.5;}
 #toolBar .Btn:hover{margin-top:-1px;}

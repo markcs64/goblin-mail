@@ -8,43 +8,6 @@ $mailCharSet = "utf-8";
 
 switch(strtoupper($action))
 {
-	case "FILETREE": //显示留言
-		//这个乱码问题可恶 注意htmlentities 也会引起乱码...访问目录又一定要用乱码路径才能找到...切...真麻烦...
-		header("Content-Type: text/html; charset=$serverCharCode");
-		//没有root会报错
-		//fileTree想用json...算了...返回不复杂 省省客户端解析资源也好~~
-		$_POST['filePath'] = urldecode($_POST['filePath']);
-		if( file_exists($_POST['filePath']) ) {
-			$files = scandir($_POST['filePath']);
-			//natcasesort($files);
-			rsort($files);
-			if( count($files) > 2 ) { /* 这2个是 ./ 和 ../ */
-				echo "<ul class=\"jQfileTree\" style=\"display: none;\">";
-				// 遍历文件夹
-				foreach( $files as $file ) {
-					if( file_exists($_POST['filePath'] . $file) && $file != '.' && $file != '..' && is_dir($_POST['filePath'] . $file) ) {
-						echo "<li class=\"imDir collapsed\" title=\"" . htmlspecialchars($_POST['filePath'] . $file) . "\" rel=\"" . htmlentities($_POST['filePath'] . $file) . "/\"><span class=\"item directory\">" . htmlspecialchars($file) . "</span></li>";
-					}
-				}
-				// 遍历文件
-				foreach( $files as $file ) {
-					if( file_exists($_POST['filePath'] . $file) && $file != '.' && $file != '..' && !is_dir($_POST['filePath'] . $file) ) {
-						$ext = preg_replace('/^.*\./', '', $file);
-						//** darksnow ext allow **
-						if(empty($_POST['allowExt']) || strrpos(strtolower($_POST['allowExt']),"|".strtolower($ext)."|") > 0){
-								$fileSize = fileSize($_POST['filePath'] . $file) / 1024;
-								//取小数点1位
-								$fileSize = number_format($fileSize,1,".","");
-								$editTime = date("Y-m-d H:i:s",filemTime($_POST['filePath'] . $file));
-								echo "<li class=\"imFile\" title=\"P : " . htmlspecialchars($_POST['filePath'] . $file) . "\nS : ".$fileSize." kb\nT : ".$editTime."\" path=\"" . htmlspecialchars($_POST['filePath'] . $file) . "\" rel=\"" . htmlentities($_POST['filePath'] . $file) . "\"><span class=\"item file ext_$ext\">" . htmlspecialchars($file) . "</span></li>";
-						}
-					}
-				}
-				echo "</ul>";	
-			}
-		}
-		unset($files);
-		break;
 	case "NEWFILETREE" : /* path必需 结尾/必需 */
 		header("Content-Type: text/html; charset=$serverCharCode");
 		if(!isset($_REQUEST["path"]))return;
@@ -173,7 +136,63 @@ switch(strtoupper($action))
 
 		unset($mail);
 		break;
-				
+	
+	case "COUNTER" :
+		$counterFile = $_REQUEST['counterFile'];
+		$id = "d6wCounter";
+		$t_now   = time();
+		$t_array = getdate($t_now);
+		$day     = $t_array['mday'];
+		$mon     = $t_array['mon'];
+		$year    = $t_array['year'];
+		$id_count=$id.'count';
+		$id_yet=$id.'yet';
+		
+		if (file_exists($counterFile)) { 
+			$count_info=file($counterFile);
+			$c_info = explode(",", $count_info[0]);
+			$total_c=$c_info[0];
+			$yesterday_c=$c_info[1];
+			$today_c=$c_info[2];
+			$lastday=$c_info[3];
+		} else {
+			$total_c="1";
+			$yesterday_c="0";
+			$today_c="0";
+			$lastday="0";
+		}
+		if ( isset($HTTP_COOKIE_VARS["$id_count"]) ) $your_c = $HTTP_COOKIE_VARS["$id_count"]; 
+		if ( !isset($HTTP_COOKIE_VARS["$id_yet"]) || $HTTP_COOKIE_VARS["$id_yet"] != $day) {
+			$your_c=1;
+			$t_array2 = getdate($t_now-24*3600);
+			$day2=$t_array2['mday'];
+			$mon2=$t_array2['mon'];
+			$year2=$t_array2['year'];
+			$today = "$year-$mon-$day";
+			$yesterday = "$year2-$mon2-$day2";
+			if ($today != $lastday) {
+		     		if ($yesterday != $lastday) $yesterday_c = "0";
+		      			else $yesterday_c = $today_c;
+				$today_c = 0;
+				$lastday = $today;
+			}
+			$total_c++;
+			$today_c++;
+			
+			$total_c     = sprintf("%06d", $total_c);
+			$today_c     = sprintf("%06d", $today_c);
+			$yesterday_c = sprintf("%06d", $yesterday_c);
+			
+			setcookie("$id_yet","$day",$t_now+43200);
+			$fp=fopen($counterFile,"w");
+			fputs($fp, "$total_c,$yesterday_c,$today_c,$lastday");
+			fclose($fp);
+		}
+		if ( empty( $your_c ) ) $your_c = 1;
+		setcookie("$id_count",$your_c+1,$t_now+43200);
+		$response = "total:$total_c,yesterday:$yesterday_c,today:$today_c,you:$your_c,lastday:$lastday";
+		echo "({".$response."})";
+
 	default://默认ACTION
 		//echo "<br /> 你想 do What ??";
 		break;

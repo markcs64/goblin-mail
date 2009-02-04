@@ -771,7 +771,7 @@ $(function(){
 		var draftsBoxConfig = {
 				title : " - 我的草稿箱",
 				target : "#draftsBox",
-				root : "Files/Drafts/",
+				root : "Files/Archive/",
 				script : "actions.php",
 				fileList : "#draftsList",
 				showRoom : "#draftShowRoom",

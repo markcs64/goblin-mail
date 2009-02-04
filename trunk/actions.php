@@ -125,23 +125,38 @@ switch(strtoupper($action))
 		$mail->CharSet = "UTF-8";
 		//test
 		$mail->IsSMTP();
-		//$mail->SMTPAuth   = true;
-		//$mail->Host       = "smtp.gmail.com";
-		//$mail->SMTPSecure = "ssl";
+		$mail->SMTPAuth   = true;
+		$mail->Host       = "smtp.gmail.com";
+		$mail->SMTPSecure = "ssl";
 		//记得开启php配置 -> extension=php_openssl.dll
-		//$mail->Port = 465;
-		//$mail->Username   = "aliued.goblin@gmail.com";
-		//$mail->Password   = "hello1234";
-		//$mail->From       = "aliued.goblin@gmail.com";
-		//$mail->FromName   = "ALiUED - Goblin*darkSnow";
-		$mail->Host       = "10.0.85.8";
-		$mail->From       = "aliued@alibaba.com";
+		$mail->Port = 465;
+		$mail->Username   = "aliued.goblin@gmail.com";
+		$mail->Password   = "hello1234";
+		$mail->From       = "aliued.goblin@gmail.com";
 		$mail->FromName   = "EDM Goblin";
+		/*
+		$mail->Host       = "10.0.85.8";
+		$mail->From       = "aliued.goblin@gmail.com";
+		$mail->FromName   = "EDM Goblin";
+		*/
 		$mail->Subject    = "=?UTF-8?B?" . base64_encode($_REQUEST['title']) . "?=";
 		$mail->WordWrap   = 10;
+		
 		$mailBody = $_REQUEST['content'];
 		//$mailBody = $mail->getFile('contents.php');
-		//$mailBody = eregi_replace("[\]",'',$mailBody);
+		
+		//生成临时附件
+		$filePath = iconv("utf-8",$serverCharCode,"Files/mailDemo.html");
+		$file=fopen($filePath, "w");
+		$content = $_REQUEST['content'];
+		$ext = strtolower(end(explode(".",$_REQUEST['tplPath'])));
+		fputs($file, $mailBody); 
+		fclose($file);
+		$mail->AddAttachment("Files/mailDemo.html", $_REQUEST['title'].".$ext"); 
+		
+		//针对于%%track链接的兼容
+		$mailBody = preg_replace('/%%track[\s\S\n ]*?{(.*?)}[\s\S\n ]*?%%/','$1',$mailBody);
+		
 		$mail->MsgHTML($mailBody);
 		$mailToArray = explode(';', rtrim($_REQUEST['mailTo'],";"));
 		foreach( $mailToArray as $mailTo ) {

@@ -267,7 +267,7 @@ $.fn.toBeFileBrowser = function(myConfig) {
 				script: "actions.php",
 				expandEasing: "easeOutBounce",
 				collapseEasing: "easeOutBounce",
-				allowExt : ">>|js|html|htm|css|<<"
+				allowExt : ">>|js|html|htm|css|txt|<<"
 			 },
 				 //文件点击时执行
 				 function(item){
@@ -556,7 +556,7 @@ $.fn.toBeMailPanel = function(myConfig) {
 			$.ajax({
 				url: 'actions.php', 
 				type: 'POST', 
-				data:{mailTo:mailAddress,title:mailTitle,action:"SENDMAIL",content:html}, 
+				data:{mailTo:mailAddress,title:mailTitle,action:"SENDMAIL",content:html,tplPath:$(DOM.config.linkEditor).get(0).nowEditFilePath}, 
 				dataType: 'html', 
 				timeout: -1, 
 				error: function(){

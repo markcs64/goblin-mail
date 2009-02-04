@@ -152,7 +152,7 @@ switch(strtoupper($action))
 		$ext = strtolower(end(explode(".",$_REQUEST['tplPath'])));
 		fputs($file, $mailBody); 
 		fclose($file);
-		$mail->AddAttachment("Files/mailDemo.html", $_REQUEST['title'].".$ext"); 
+		$mail->AddAttachment("Files/mailDemo.html", "Mail Demo.$ext"); 
 		
 		//针对于%%track链接的兼容
 		$mailBody = preg_replace('/%%track[\s\S\n ]*?{(.*?)}[\s\S\n ]*?%%/','$1',$mailBody);

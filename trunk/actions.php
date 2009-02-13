@@ -111,9 +111,9 @@ switch(strtoupper($action))
 		//生成临时附件
 		$filePath = iconv("utf-8",$serverCharCode,"Files/mailDemo.html");
 		$file=fopen($filePath, "w");
-		$content = $_REQUEST['content'];
+		$content = chunk_split($_REQUEST['content'],150);
 		$ext = strtolower(end(explode(".",$_REQUEST['tplPath'])));
-		fputs($file, $mailBody); 
+		fputs($file, $content); 
 		fclose($file);
 		$mail->AddAttachment("Files/mailDemo.html", "测试邮件 - ".$_REQUEST['title'].".$ext"); 
 		

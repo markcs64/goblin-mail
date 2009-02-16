@@ -43,6 +43,7 @@ $.fn.toBeEditor = function(myConfig) {
 		var config = DOM.config = $.extend({
 				type : "FCK",	//编辑器引擎 方便日后扩展
 				name : "editor",	//fn名称
+				form : "#mailBodyForm",	//编辑器外部form id
 		    basePath : "JS/fck/",	//编辑器基础路径
 		    skinPath : $.I.config.skinPath + "/FCKStyle/", //风格路径 相对于基础路径
 		    customConfigFile : "Js/FCK/CustomSetting/snow.config.js", //自定义配置路径
@@ -68,6 +69,11 @@ $.fn.toBeEditor = function(myConfig) {
 		DOM.GetHTML = function(){
 			var editor = FCKeditorAPI.GetInstance(DOM.id);
 			return editor.GetHTML();
+		}
+		//同步刷入textarea
+		DOM.UpdateLinkedField = function(){
+			var editor = FCKeditorAPI.GetInstance(DOM.id);
+			editor.UpdateLinkedField();
 		}
 		//** 赋值 **/
 		DOM.setEditorData = function(content,pathInfo){
@@ -170,6 +176,7 @@ $.fn.toBeEditor = function(myConfig) {
 	
 		//索引标记住此编辑器  为了不耗资源  只用id 而不是把整个obj赋过去
 		self.editorId = this.attr("id");
+
 		
 		//清一下内存
 		if($.browser.msie)CollectGarbage();
@@ -390,24 +397,33 @@ $.fn.toBeFileBrowser = function(myConfig) {
 			var defaultFileName = new Date().format("yyyy.M.d hh点mm分ss秒");
 			var draftFileName = prompt("请输入要保存的草稿文件名称",defaultFileName);if(!draftFileName)return;
 			draftFileName += ".html";
-			var html = d6wEditor.GetHTML();
-			$.ajax({
-			url: 'actions.php', 
-			type: 'POST', 
-			data:{filePath:"Files/Archive/" + draftFileName,action:"WRITEFILE",content:html}, 
-			dataType: 'html', 
-			timeout: 1000, 
-			error: function(){
-				alert('Error loading PHP document');
-				try{config.btn.loadingIco.hide(500);}catch(e){};
-			}, 
-			success: function(result){
-				alert(result + " - " + draftFileName);
-				//存完刷新~~
-				if(DOM.fileList){DOM.fileList.reloadTree();}
-				try{config.btn.loadingIco.hide(500);}catch(e){};
-			}
-			});
+			//var html = d6wEditor.GetHTML();
+			
+			var options = {
+						url: 'actions.php', 
+						type: 'POST', 
+						data:{filePath:"Files/Archive/" + draftFileName,action:"WRITEFILE"}, 
+						dataType: 'html', 
+						timeout: 1000, 
+						error: function(){
+							alert('Error loading PHP document');
+							try{config.btn.loadingIco.hide(500);}catch(e){};
+						}, 
+						success: function(result){
+							alert(result + " - " + draftFileName);
+							//存完刷新~~
+							if(DOM.fileList){DOM.fileList.reloadTree();}
+							try{config.btn.loadingIco.hide(500);}catch(e){};
+						}
+			}		
+	
+			// 重设textarea
+			var linkEditor = $(DOM.config.linkEditor).get(0);
+			linkEditor.UpdateLinkedField();
+			
+			//发送表单数据
+			$(linkEditor.config.form).ajaxSubmit(options);
+			
 			//后续操作
 			try{
 				//loading图标
@@ -580,11 +596,12 @@ $.fn.toBeMailPanel = function(myConfig) {
 			var sendMailBtn = $SELF.find("[class*='"+config.sendMailBtnClass+"']");
 			sendMailBtn.addClass(config.sendMailBtnLoadingClass);
 			var linkEditor = $(config.linkEditor).get(0);
-			var html = linkEditor.GetHTML();
+			//var html = linkEditor.GetHTML();
 			
 			var mailTitle = $SELF.find("[class*='"+config.mailTitleClass+"']").val();
 			var mailAddress = $SELF.find("[class*='"+config.mailAddressClass+"']").val();
 			
+/*
 			$.ajax({
 				url: 'actions.php', 
 				type: 'POST', 
@@ -605,6 +622,34 @@ $.fn.toBeMailPanel = function(myConfig) {
 					DOM.isSending = false;
 				}
 			});
+*/
+			var options = {
+						url: 'actions.php', 
+						type: 'POST',
+						data:{mailTo:mailAddress,title:mailTitle,action:"SENDMAIL",tplPath:encodeURI($(DOM.config.linkEditor).get(0).nowEditFilePath)}, 
+						dataType: 'html', 
+						timeout: -1,
+						error: function(){
+							alert('Error loading PHP document');
+						}, 
+						success: function(result){
+							//alert(result);
+							$(DOM.config.linkMsgBox).get(0).showSelf({autoBack:true});
+							$(DOM.config.sendMailCount).html(parseInt($(DOM.config.sendMailCount).html())+1);
+						},
+						complete : function(){
+							$(config.tooBarLoadingIco).fadeOut(500);
+							sendMailBtn.removeClass(config.sendMailBtnLoadingClass);
+							DOM.isSending = false;
+						}
+			}		
+	
+			// 重设textarea
+			linkEditor.UpdateLinkedField();
+
+			//发送表单数据
+			$(linkEditor.config.form).ajaxSubmit(options);
+
 			try{
 				//loading图标
 				config.btn.loadingIco = $('<span class="loading"></span>');
@@ -756,6 +801,16 @@ function FCKeditor_OnComplete(editorInstance){
 
 }
 
+//重新填充所有fck的textarea
+function reTextEveryFCK(){
+	if (FCKeditorAPI) 
+	{ 
+	   for (i in FCKeditorAPI.__Instances) 
+	   { 
+	      FCKeditorAPI.__Instances[i].UpdateLinkedField(); 
+	   } 
+	}
+}
 
 
 
@@ -775,7 +830,7 @@ $(function(){
 			toolbarSet:"snow",
 			toolbarStartExpanded:false,
 			fullPage:true,
-			height:"94%",
+			height:document.body.scrollHeight - 40,
 			width:"100%",
 			mailTo : "sxnow@126.com;alibaba_test@yahoo.com;alibaba_test@hotmail.com;alibabatest@gmail.com"
 		}
@@ -852,6 +907,7 @@ $(function(){
 		$(window).resize( function() { 
 										$('#shadowSWF').height(document.body.scrollHeight);
 										$('#shadowSWF').width(document.body.scrollWidth);
+										$('#d6wEditor___Frame').height($(window).height()-40);
 									 } );
 									 
 									 

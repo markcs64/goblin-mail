@@ -91,6 +91,7 @@ switch(strtoupper($action))
 		$mail->SMTPAuth   = true;
 		$mail->Host       = "smtp.gmail.com";
 		$mail->SMTPSecure = "ssl";
+	
 		//记得开启php配置 -> extension=php_openssl.dll
 		$mail->Port = 465;
 		$mail->Username   = "aliued.goblin@gmail.com";
@@ -108,15 +109,16 @@ switch(strtoupper($action))
 		$mailBody = $_REQUEST['content'];
 		//$mailBody = $mail->getFile('contents.php');
 		
+		/*
 		//生成临时附件
 		$filePath = iconv("utf-8",$serverCharCode,"Files/mailDemo.html");
 		$file=fopen($filePath, "w");
-		$content = chunk_split($_REQUEST['content'],150);
+		//$content = chunk_split($_REQUEST['content'],150);
 		$ext = strtolower(end(explode(".",$_REQUEST['tplPath'])));
 		fputs($file, $content); 
 		fclose($file);
 		$mail->AddAttachment("Files/mailDemo.html", "测试邮件 - ".$_REQUEST['title'].".$ext"); 
-		
+		*/
 		//针对于%%track链接的兼容
 		$mailBody = preg_replace('/%%track[\s\S\n ]*?{(.*?)}[\s\S\n ]*?%%/','$1',$mailBody);
 		

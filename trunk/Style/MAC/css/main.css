@@ -70,7 +70,7 @@ a:hover{color:#8F4116;}
 
 .mailPanel{position:absolute;z-index:1117;bottom:-150px;left:50%;margin-left:-400px;margin-bottom:6px;width:800px;height:150px;background-image:url(../images/famfamfamAluminum/background.dark.gif);border:3px solid #939393;border-bottom:none;color:#6C6C6C;}
 .mailPanelLogo{float:left;height:110px;width:110px;background:url(../images/main/mailBoxLogo.gif) 0 0 no-repeat;}
-.mailPanel .closeBtn{position:absolute;right:0px;top:0px;display:block;width:24px;height:24px;background:url(../images/main/closeBtnSmall.gif) 4px 4px no-repeat;}
+.mailPanel .closeBtn{position:absolute;right:0px;top:0px;display:block;width:24px;height:24px;line-height:24px;background:url(../images/main/closeBtnSmall.gif) 4px 4px no-repeat;}
 .mailPanel .closeBtn:hover{background-image:url(../images/main/closeBtnSmallActive.gif);}
 .mailPanel .mailStep1{float:left;width:280px;height:125px;background:url(../images/main/mailBoxStep1Bg.gif) right 0 no-repeat;font:14px "微软雅黑",arial,verdana;}
 .mailPanel .mailStep2{float:left;width:410px;height:125px;background:url(../images/main/mailBoxStep2Bg.gif) right 0 no-repeat;font:14px "微软雅黑",arial,verdana;}
@@ -82,8 +82,8 @@ a:hover{color:#8F4116;}
 
 .mailStep2 .stepTitle{margin:10px 0 0 115px;}
 .mailStep2 .textArea{position:relative;width:290px;margin:3px 0 0 10px;}
-.mailStep2 .textAreaL{position:absolute;top:0px;left:0px;width:12px;height:80px;background:url(../images/main/sprite.gif) left -500px no-repeat;}
-.mailStep2 .textAreaR{position:absolute;top:0px;right:0px;width:12px;height:80px;background:url(../images/main/sprite.gif) left -600px no-repeat;}
+.mailStep2 .textAreaL{position:absolute;top:-1px;left:-10px;_top:0px;_left:0px;width:12px;height:80px;background:url(../images/main/sprite.gif) left -500px no-repeat;}
+.mailStep2 .textAreaR{position:absolute;top:-1px;right:10px;_top:0px;_right:0px;width:12px;height:80px;background:url(../images/main/sprite.gif) left -600px no-repeat;}
 .mailStep2 .mailAddress{margin:0 0 0 -6px;width:264px;height:70px;padding:3px 8px;font:normal 12px tahoma;overflow:auto;background:url(../images/famfamfamAluminum/background.light.gif);border:1px solid #ACACAC;color:#72619E;}
 
 

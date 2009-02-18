@@ -162,8 +162,10 @@ $.fn.toBeEditor = function(myConfig) {
 		oFCKeditor.Config['EnableXHTML'] = false;
 		oFCKeditor.Config['FillEmptyBlocks'] = false;
 		oFCKeditor.Config['EnableSourceXHTML'] = false;
-		oFCKeditor.Config['ImageBrowser'] = false;  
-		/*
+		oFCKeditor.Config['ImageBrowser'] = false;
+		oFCKeditor.Config['EnterMode'] = 'br';
+		oFCKeditor.Config['ShiftEnterMode'] = 'br';
+/*
 		oFCKeditor.Config['EnableSourceXHTML'] = false;
 		oFCKeditor.Config['EnableXHTML'] = false;
 		oFCKeditor.Config['FillEmptyBlocks'] = false; //是否填充空块

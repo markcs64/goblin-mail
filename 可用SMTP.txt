@@ -1,7 +1,6 @@
 ﻿aliued.goblin@gmail.com 
 PSW:hello1234
 
-
 	case "SENDMAIL" :
 		include_once('includes/class.phpmailer.php');
 		$mail = new PHPMailer();

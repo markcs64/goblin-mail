@@ -119,7 +119,9 @@ switch(strtoupper($action))
 		
 		$mailBody = $_REQUEST['content'];
 		//$mailBody = $mail->getFile('contents.php');
-		
+
+		//邮件不能使用<br /> 转换为<br>
+		$mailBody = preg_replace('/<br \/>/','<br>',$mailBody);		
 
 		//生成临时附件
 		$filePath = iconv("utf-8",$serverCharCode,"Files/mailDemo.html");
@@ -130,7 +132,7 @@ switch(strtoupper($action))
 		fclose($file);
 		$mail->AddAttachment("Files/mailDemo.html", "测试邮件 - ".$_REQUEST['title'].".$ext"); 
 
-		//针对于%%track链接的兼容
+		//针对于%%track链接的兼容 因为附件里面保持原样 所以放到后面来做
 		$mailBody = preg_replace('/%%track[\s\S\n ]*?{(.*?)}[\s\S\n ]*?%%/','$1',$mailBody);
 		
 		$mail->MsgHTML($mailBody);

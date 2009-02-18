@@ -1,0 +1,40 @@
+﻿aliued.goblin@gmail.com 
+PSW:hello1234
+
+
+	case "SENDMAIL" :
+		include_once('includes/class.phpmailer.php');
+		$mail = new PHPMailer();
+		$mail->CharSet = "UTF-8";
+		//test
+		$mail->IsSMTP();
+		$mail->SMTPAuth   = true;
+		$mail->Host       = "smtp.gmail.com";
+		$mail->SMTPSecure = "ssl";
+		$mail->Port = 465;
+		$mail->Username   = "alibabatest@gmail.com";
+		$mail->Password   = "alibaba";
+		$mail->From       = "alibabatest@gmail.com";
+		$mail->FromName   = "ALiUED - Goblin*darkSnow";
+		$mail->Subject    = "=?UTF-8?B?" . base64_encode("D6W TEST MAIL - from Goblin v1.0α") . "?=";
+		$mail->WordWrap   = 10;
+		$mailBody = $_REQUEST['content'];
+		//$mailBody = $mail->getFile('contents.php');
+		//$mailBody = eregi_replace("[\]",'',$mailBody);
+		$mail->MsgHTML($mailBody);
+		$mailToArray = explode(';', $_REQUEST['mailTo']);
+		foreach( $mailToArray as $mailTo ) {
+			$mail->AddAddress($mailTo);
+		}
+		$mail->IsHTML(true);
+		//$mail->Send();
+
+		if(!$mail->Send()) {
+		  echo "Mailer Error: " . $mail->ErrorInfo;
+		} else {
+		  echo "邮件发送成功 -> ".$_REQUEST['mailTo'];
+		}
+
+		unset($mail);
+		break;
+		

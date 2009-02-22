@@ -117,7 +117,7 @@ switch(strtoupper($action))
 		$mail->Subject    = "=?UTF-8?B?" . base64_encode($_REQUEST['title']) . "?=";
 		//$mail->WordWrap   = 10;
 		
-		$mailBody = $_REQUEST['content'];
+		$mailBody = stripcslashes($_REQUEST['content']);	//使用 stripcslashes 防止php中设置"被转义为\"
 		//$mailBody = $mail->getFile('contents.php');
 
 		//邮件不能使用<br /> 转换为<br>

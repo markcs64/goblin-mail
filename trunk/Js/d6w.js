@@ -502,7 +502,7 @@ $.fn.toBeMsgBox = function(myConfig) {
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-//=[ mail控制面板 ]=------------------------------------------------->>>
+//=[ 计数器 ]=------------------------------------------------->>>
 $.fn.toBeCounter = function(myConfig) {
 	var DOM = this.get(0);if(eval("typeof("+DOM.id+")") == "undefined"){eval(DOM.id + " = DOM;");}//DOMID -> 全局
 	var $SELF = this;
@@ -742,8 +742,7 @@ jQuery.fn.outer = function() {
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //=[ 功能 : Date prototype 扩展 时间格式化 ]=------------------------------------------------->>>
 //PS.new Date().format("yyyy.M.d mm分ss秒")
-Date.prototype.format = function(format)
-{
+Date.prototype.format = function(format){
 	var o = {
 	"M+" : this.getMonth()+1, //month
 	"d+" : this.getDate(),    //day
